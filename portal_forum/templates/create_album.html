@@ -1,0 +1,76 @@
+{% extends "forum-layout.html" %}
+{% block content %}
+
+    <script src="{{ url_for('static', filename='ckeditor/ckeditor.js') }}"></script>
+
+    <div class="content-section">
+        <form method="POST" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">{{ title }}</legend>
+                <div class="form-group">
+                    {{ form.title.label(class="form-control-label") }}
+                    {% if form.title.errors %}
+                        {{ form.title(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.title.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.title(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.picture.label() }}
+                    {{ form.picture(class="form-control-file") }}
+                    {% if form.picture.errors %}
+                        {% for error in form.picture.errors %}
+                            <span class="text-danger">{{ error }}</span><br>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                {% if image_album != "album_covers/default.jpg" %}
+                    <div>
+                        <img width="150px" src="{{ url_for('static', filename='album_covers/'+image_album) }}">
+                    </div>
+                {% endif %}
+                <div class="form-group">
+                    {{ form.date_release.label(class="form-control-label") }}
+                    {% if form.date_release.errors %}
+                        {{ form.date_release(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.date_release.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.date_release(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.description.label(class="form-control-label") }}
+                    {% if form.description.errors %}
+                        {{ form.description(class="form-control form-control-lg is-invalid", name="description", id="description") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.description.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.description(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <script>
+                    CKEDITOR.replace('description');
+                </script>
+            </fieldset>
+            <div class="form-group">
+                <button type="submit" class="btn bg-dark text-white responsive-full responsive-marg-6">Zapisz</button>
+                <a href="{{ url_for("main.admin_panel") }}"
+                   class="btn bg-dark text-white responsive-full responsive-marg-6">Powrót</a>
+            </div>
+        </form>
+    </div>
+{% endblock content %}

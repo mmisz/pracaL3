@@ -1,0 +1,66 @@
+{% extends "portal-layout.html" %}
+{% block content %}
+    <div class="track-nav mt-2">
+        <a href="{{ url_for("main.track", track_id=track.id) }}"
+           class="btn btn-primary-dark responsive-full mb-2">
+            O utworze
+        </a>
+        <a href="{{ url_for("main.scraps", track_id=track.id) }}"
+           class="btn btn-outline-primary-dark responsive-full mb-2">
+
+            Fragmenty
+        </a>
+        <a href="{{ url_for("main.interpretations", track_id=track.id) }}"
+           class="btn btn-outline-primary-dark responsive-full mb-2">
+
+            Interpretacje
+        </a>
+        <a href="{{ url_for("main.translations", track_id=track.id) }}"
+           class="btn btn-outline-primary-dark responsive-full mb-2">
+
+            Tłumaczenia
+        </a>
+    </div>
+    <article class="media content-section">
+        <div class="track-article">
+            <h2 class="article-title">{{ track.title }}</h2>
+
+            <div class="lyrics-text">
+                {{ tags }}
+            </div>
+            <div class="card border-dark mb-3 lyrics-description">
+            <img width="100%"  src="{{ url_for('static', filename='album_covers/' + this_image_file) }}">
+                <div class="card-header">Informacje o utworze</div>
+                <div class="card-body text-dark pb-0 pt-0">
+                    <p class="card-text">
+                        <small>
+                    <p>Rok wydania - {{ track.date_release }}</p>
+                    <p>Autor tekstu - {{ track.lyrics_by }}</p>
+                    <p>Utwór znalazł się na albumach:
+                    <ul>
+                        {% for album in track.albums %}
+                            <li>{{ album.title }} ({{ album.date_release }})</li>
+                        {% endfor %}
+                    </ul>
+                    </p>
+                    {% if tags_description|length > 0 %}
+                        <hr>
+                        <p>Opis utworu:<br>
+                            {{ tags_description }}
+                        </p>
+                    {% endif %}
+                    </small>
+                    </p>
+
+                </div>
+            </div>
+
+        </div>
+
+    </article>
+
+
+    <a href="{{ url_for('main.tracks') }}" class="btn btn-primary-dark text-white responsive-full mb-2">Lista
+        utworów</a>
+
+{% endblock content %}

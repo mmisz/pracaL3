@@ -1,0 +1,102 @@
+{% extends "forum-layout.html" %}
+{% block content %}
+    <h3 class="mb-2 mt-2">Aktywność użytkwonika {{ user.username }}</h3>
+    {% if activity.threads|length > 0 %}
+        <div class="card">
+            <div class="card-header">
+                Wątki na forum
+            </div>
+            <div class="card-body">
+                <ul style="list-style-type: none">
+                    {% for thread in activity.threads %}
+                        <li>
+                        {{ thread.date_posted.strftime('%Y-%m-%d') }} -
+                        <a class="grey-link" href="{{ url_for("user_activity.thread",thread_id=thread.id) }}">
+                            {{ thread.topic }}
+                        </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    {% endif %}
+    {% if activity.tracks|length > 0 %}
+        <div class="card">
+            <div class="card-header">
+                Utwory dodane przez użytkownika
+            </div>
+            <div class="card-body">
+                <ul style="list-style-type: none">
+                    {% for track in activity.tracks %}
+                        {{ track.date_posted.strftime('%Y-%m-%d') }} -
+                        <a class="grey-link" href="{{ url_for("user_activity.track",track_id=track.id) }}">
+                            {{ track.title }}
+                        </a>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    {% endif %}
+    {% if activity.interpretations|length > 0 %}
+        <div class="card">
+            <div class="card-header">
+                Dodane interpretacje utworów
+            </div>
+            <div class="card-body">
+                <ul style="list-style-type: none">
+                    {% for interpretation in activity.interpretations %}
+                        <li>
+                        {{ interpretation.date_posted.strftime('%Y-%m-%d') }} -
+                        <a class="grey-link"
+                           href="{{ url_for("user_activity.interpretation",track_id=interpretation.track.id, interpretation_id=interpretation.id) }}">
+                            {{ interpretation.title }}
+                        </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    {% endif %}
+    {% if activity.translations|length > 0 %}
+        <div class="card">
+            <div class="card-header">
+                Dodane tłumaczenia utworów
+            </div>
+            <div class="card-body">
+                <ul style="list-style-type: none">
+                    {% for translation in activity.translations %}
+                        <li>
+                            {{ translation.date_posted.strftime('%Y-%m-%d') }} -
+                            <a class="grey-link"
+                               href="{{ url_for("user_activity.translation",track_id=translation.track.id, translation_id=translation.id) }}">
+                                {{ translation.title }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    {% endif %}
+    {% if activity.scraps|length > 0 %}
+        <div class="card">
+            <div class="card-header">
+                Oznaczone fragmenty
+            </div>
+            <div class="card-body">
+                <ul style="list-style-type: none">
+                    {% for scrap in activity.scraps %}
+                        <li>
+                            {{ scrap.date_posted.strftime('%Y-%m-%d') }} -
+                            <a class="grey-link" href="{{ url_for("user_activity.scraps",track_id=scrap.track.id) }}">
+                                {{ scrap.track.title }}
+                        </li>
+                        </a>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    {% endif %}
+    <div>
+        <a href="{{ url_for('main.forum') }}" class="btn bg-dark text-white responsive-full">Strona główna</a>
+    </div>
+{% endblock content %}

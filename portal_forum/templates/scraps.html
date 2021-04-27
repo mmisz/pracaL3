@@ -1,0 +1,611 @@
+{% extends "forum-layout.html" %}
+{% block content %}
+    <div class="track-nav mt-2">
+        <a href="{{ url_for("user_activity.track", track_id=track.id) }}"
+           class="btn btn-outline-dark responsive-full mb-2">
+            Dyskusja
+        </a>
+        <a href="{{ url_for("user_activity.scraps", track_id=track.id) }}"
+           class="btn btn-dark responsive-full mb-2">
+
+            Fragmenty
+        </a>
+        <a href="{{ url_for("user_activity.interpretations", track_id=track.id) }}"
+           class="btn btn-outline-dark responsive-full mb-2">
+
+            Interpretacje
+        </a>
+        <a href="{{ url_for("user_activity.translations", track_id = track.id) }}"
+           class="btn btn-outline-dark responsive-full mb-2">
+
+            Tłumaczenia
+        </a>
+    </div>
+    <script src="{{ url_for('static', filename='ckeditor-basic-2/ckeditor.js') }}"></script>
+    <article class="media content-section">
+        <div class="article-user-info">
+            <h5>
+                <a class="mr-2 grey-link"
+                   href="{{ url_for("user_activity.user_actions", username=track.author.username) }}">{{ track.author.username }}
+                </a>
+            </h5>
+            <img class="rounded-circle article-img"
+                 src="{{ url_for('static', filename='profile_pics/' + track.author.image_file) }}">
+        </div>
+        <div class="track-article">
+            <div class="article-metadata">
+            {% if track.author == current_user or current_user.is_admin %}
+                    <div class="article-gear-btn">
+                        <div>
+                            <button type="button" style="padding: 6px;" class="btn btn-secondary"
+                                    data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-gear dis-block" viewBox="0 0 16 16">
+                                    <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"></path>
+                                    <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"></path>
+                                </svg>
+                            </button>
+                            <div class="dropdown-menu" x-placement="bottom-start"
+                                 style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                {% if current_user.is_admin %}
+                                    {% if track.published == 1 %}
+                                        <a class="btn btn-secondary dropdown-item"
+                                           href="{{ url_for("main.publish",target_id=track.id, target_type='track', action_type="unpublish") }}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                 fill="currentColor" class="bi bi-box-arrow-in-down"
+                                                 viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd"
+                                                      d="M3.5 6a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-8a.5.5 0 0 0-.5-.5h-2a.5.5 0 0 1 0-1h2A1.5 1.5 0 0 1 14 6.5v8a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 14.5v-8A1.5 1.5 0 0 1 3.5 5h2a.5.5 0 0 1 0 1h-2z"></path>
+                                                <path fill-rule="evenodd"
+                                                      d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"></path>
+                                            </svg>
+                                            Ukryj
+                                        </a>
+                                    {% else %}
+                                        <a class="btn btn-secondary dropdown-item"
+                                           href="{{ url_for("main.publish",target_id=track.id, target_type='track', action_type="publish") }}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                 fill="currentColor" class="bi bi-box-arrow-up" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd"
+                                                      d="M3.5 6a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-8a.5.5 0 0 0-.5-.5h-2a.5.5 0 0 1 0-1h2A1.5 1.5 0 0 1 14 6.5v8a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 14.5v-8A1.5 1.5 0 0 1 3.5 5h2a.5.5 0 0 1 0 1h-2z"></path>
+                                                <path fill-rule="evenodd"
+                                                      d="M7.646.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 1.707V10.5a.5.5 0 0 1-1 0V1.707L5.354 3.854a.5.5 0 1 1-.708-.708l3-3z"></path>
+                                            </svg>
+                                            Opublikuj
+                                        </a>
+                                    {% endif %}
+
+                                {% endif %}
+                                {% if track.author == current_user %}
+                                    <a class="btn btn-secondary dropdown-item"
+                                       href="{{ url_for("user_activity.update_track",track_id=track.id) }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                             fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"></path>
+                                            <path fill-rule="evenodd"
+                                                  d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"></path>
+                                        </svg>
+                                        Popraw
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                {% endif %}
+                                <button type="button" class="btn btn-outline-danger dropdown-item"
+                                        data-toggle="modal"
+                                        data-target="#deleteModal">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                         fill="currentColor"
+                                         class="bi bi-trash" viewBox="0 0 16 16">
+                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"></path>
+                                        <path fill-rule="evenodd"
+                                              d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"></path>
+                                    </svg>
+                                    Usuń
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+                <small class="text-muted responsive-block">
+                    {{ track.date_posted.strftime('%Y-%m-%d %H:%M') }}
+                    {% if track.date_posted < track.date_last_update %}
+                        | Edytowano: {{ track.date_last_update.strftime('%Y-%m-%d %H:%M') }}
+                    {% endif %}
+                </small>
+
+            </div>
+
+            <h2 class="article-title">{{ track.title }}</h2>
+            <div class="lyrics-text" id="text-source">
+                <div id="darkLayer" class="darkClass" style="display: none;"></div>
+                {{ tags }}
+            </div>
+            <div class="card border-dark lyrics-description" id="scrap-container">
+                <div class="card-header scrap-header" style="padding-bottom: 0;">
+                    <b>Oznaczony fragment:</b>
+                    {% for element in scrap_authors_raw %}
+                        {% if element.author == current_user or current_user.is_admin %}
+                            <div class="gear-scraps article-gear-btn" id="gear-scrap-{{ element.id }}"
+                                 style="display: none;">
+                                <div>
+                                    <button type="button" style="padding: 6px;" class="btn btn-secondary"
+                                            data-toggle="dropdown"
+                                            aria-haspopup="true" aria-expanded="false">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                             fill="currentColor"
+                                             class="bi bi-gear dis-block" viewBox="0 0 16 16">
+                                            <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"></path>
+                                            <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"></path>
+                                        </svg>
+                                    </button>
+                                    <div class="dropdown-menu" x-placement="bottom-start"
+                                         style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                        {% if current_user.is_admin %}
+
+                                            {% if element.is_published == 1 %}
+                                                <a class="btn btn-secondary dropdown-item publish-scrap"
+                                                   href="{{ url_for("main.publish",target_id=element.id, target_type='scrap', action_type="unpublish") }}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                         fill="currentColor" class="bi bi-box-arrow-in-down"
+                                                         viewBox="0 0 16 16">
+                                                        <path fill-rule="evenodd"
+                                                              d="M3.5 6a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-8a.5.5 0 0 0-.5-.5h-2a.5.5 0 0 1 0-1h2A1.5 1.5 0 0 1 14 6.5v8a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 14.5v-8A1.5 1.5 0 0 1 3.5 5h2a.5.5 0 0 1 0 1h-2z"></path>
+                                                        <path fill-rule="evenodd"
+                                                              d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"></path>
+                                                    </svg>
+                                                    Ukryj
+                                                </a>
+                                            {% else %}
+                                                <a class="btn btn-secondary dropdown-item publish-scrap"
+                                                   href="{{ url_for("main.publish",target_id=element.id, target_type='scrap', action_type="publish") }}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                         fill="currentColor" class="bi bi-box-arrow-up"
+                                                         viewBox="0 0 16 16">
+                                                        <path fill-rule="evenodd"
+                                                              d="M3.5 6a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-8a.5.5 0 0 0-.5-.5h-2a.5.5 0 0 1 0-1h2A1.5 1.5 0 0 1 14 6.5v8a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 14.5v-8A1.5 1.5 0 0 1 3.5 5h2a.5.5 0 0 1 0 1h-2z"></path>
+                                                        <path fill-rule="evenodd"
+                                                              d="M7.646.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 1.707V10.5a.5.5 0 0 1-1 0V1.707L5.354 3.854a.5.5 0 1 1-.708-.708l3-3z"></path>
+                                                    </svg>
+                                                    Opublikuj
+                                                </a>
+                                            {% endif %}
+
+                                        {% endif %}
+                                        {% if element.author == current_user %}
+                                            <a class="btn btn-secondary dropdown-item"
+                                               href="{{ url_for("user_activity.update_scrap",scrap_id=element.id) }}">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                     fill="currentColor" class="bi bi-pencil-square"
+                                                     viewBox="0 0 16 16">
+                                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"></path>
+                                                    <path fill-rule="evenodd"
+                                                          d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"></path>
+                                                </svg>
+                                                Popraw
+                                            </a>
+                                            <div class="dropdown-divider"></div>
+                                        {% endif %}
+                                        <button type="button"
+                                                class="delete-scrap-btn scrap-{{ element.id }} btn btn-outline-danger dropdown-item"
+                                                data-toggle="modal"
+                                                data-target="#deleteScrapModel{{ element.id }}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                 fill="currentColor"
+                                                 class="bi bi-trash" viewBox="0 0 16 16">
+                                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"></path>
+                                                <path fill-rule="evenodd"
+                                                      d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"></path>
+                                            </svg>
+                                            Usuń
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Modal -->
+                            <div class="modal fade" id="deleteScrapModel{{ element.id }}" tabindex="-1" role="dialog"
+                                 aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="deleteModalLabel">Usunąć oznaczenie?</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a href="{{ url_for("user_activity.scraps", track_id=track.id) }}"
+                                               class="btn btn-secondary">
+                                                Zamknij
+                                            </a>
+                                            <form action="{{ url_for("user_activity.delete_scrap", scrap_id=element.id) }}"
+                                                  method="POST">
+                                                <input type="hidden" id="scrap_delete_lyrics-{{ element.id }}"
+                                                       name="scrap_delete_lyrics" value="">
+                                                <input class="btn btn-danger" type="submit" value="Usuń">
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /Modal -->
+                        {% endif %}
+                    {% endfor %}
+                    <p id="scrap-view">
+
+                    </p>
+                    <button type="button" id="btn-mark" onclick="highlight();" class="btn btn-dark full mb-2">
+                        Oznacz
+                    </button>
+                    <a class="btn btn-dark" id="btn-reset"
+                       href="{{ url_for("user_activity.scraps", track_id=track.id) }}">Resetuj</a>
+                </div>
+                <div class="card-body text-dark scrap-body pb-0 pt-0">
+                    <form method="POST" id="add-scrap-form">
+                        {{ form.hidden_tag() }}
+                        <fieldset class="mb-2">
+                            <div>
+                                {{ form.description(id="description") }}
+                            </div>
+                            <script>
+                                CKEDITOR.replace('description');
+                            </script>
+                            <div>
+                                {{ form.lyrics_with_scraps(class="form-control form-control-lg is-invalid", id="lyrics_with_scraps", style="display:none;") }}
+                            </div>
+                        </fieldset>
+                        <div class="form-group">
+                            <button id="btn-save" type="submit" class="btn bg-dark text-white full">
+                                Zapisz
+                            </button>
+                        </div>
+                    </form>
+                    <div id="scrap-description-container">
+
+                    </div>
+                    <form id="rate-scrap-form" method="POST" class="mb-2"
+                          action="{{ url_for("user_activity.rate_scrap", track_id=track.id) }}">
+                        <button type="submit" class="btn btn-outline-success" style="padding: 0" name="rate_btn"
+                                value="plus">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                                 class="bi bi-plus-square" viewBox="0 0 16 16">
+                                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"></path>
+                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"></path>
+                            </svg>
+                        </button>
+                        <span id="rates_up" style="color: #28a745;"></span>
+                        <input id="scrap_to_rate" type="hidden" name="scrap_to_rate" value="">
+                        <button type="submit" class="btn btn-outline-danger" name="rate_btn" value="minus"
+                                style="padding: 0">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                                 class="bi bi-dash-square" viewBox="0 0 16 16">
+                                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"></path>
+                                <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"></path>
+                            </svg>
+                        </button>
+                        <span id="rates_down" style="color: #dc3545;"></span>
+                    </form>
+                </div>
+                <div id="scrap-comment" style="display: none;">
+                    <form method="POST" id="add-scrap-opinion"
+                          action="{{ url_for("user_activity.add_scrap_comment", track_id=track.id) }}" method="POST">
+                        {{ comment_form.hidden_tag() }}
+                        <fieldset class="mb-2">
+                            <div>
+                                {{ comment_form.reply(id="reply", class="full") }}
+                            </div>
+                        </fieldset>
+                        <div class="form-group">
+                            <button id="btn-save" type="submit" class="btn bg-dark text-white full">
+                                Dodaj opinię
+                            </button>
+                        </div>
+                        <input id="scrap_to_comment" type="hidden" name="scrap_to_comment" value="">
+                    </form>
+                    <div id="scrap-opinions">
+                        <h5>Opinie:</h5>
+                        {% for post in opinions %}
+                            <article class="opinion opinion-{{ post.scrap.id }} media content-section"
+                                     style="margin: 0;padding: 0; display: none">
+                                <div class="article-metadata">
+                                    <h5 style="display:inline-block;">
+                                        <a class="mr-2 grey-link"
+                                           href="{{ url_for("user_activity.user_actions", username=post.author.username) }}">{{ post.author.username }}
+                                        </a>
+                                    </h5>
+                                    <div class="media-body" style="display:inline-block;">
+                                        <div>
+                                            <small class="text-muted">
+                                                {{ post.date_posted.strftime('%Y-%m-%d %H:%M') }}
+                                                {% if post.date_posted < post.date_last_update %}
+                                                    | Edytowano: {{ post.date_last_update.strftime('%Y-%m-%d %H:%M') }}
+                                                {% endif %}
+                                            </small>
+                                            {% if post.author == current_user %}
+                                                <div class="article-gear-btn">
+                                                    <div>
+                                                        <button type="button" style="padding: 6px;"
+                                                                class="btn btn-secondary"
+                                                                data-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="false">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                                 height="16"
+                                                                 fill="currentColor"
+                                                                 class="bi bi-gear dis-block" viewBox="0 0 16 16">
+                                                                <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"></path>
+                                                                <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"></path>
+                                                            </svg>
+                                                        </button>
+                                                        <div class="dropdown-menu" x-placement="bottom-start"
+                                                             style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                            <a class="btn btn-secondary dropdown-item"
+                                                               href="{{ url_for("user_activity.update_scrap_opinion", scrap_opinion_id=post.id) }}">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                                     height="16"
+                                                                     fill="currentColor" class="bi bi-pencil-square"
+                                                                     viewBox="0 0 16 16">
+                                                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"></path>
+                                                                    <path fill-rule="evenodd"
+                                                                          d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"></path>
+                                                                </svg>
+                                                                Popraw
+                                                            </a>
+                                                            <div class="dropdown-divider"></div>
+                                                            <button type="button"
+                                                                    class="btn btn-outline-danger dropdown-item"
+                                                                    data-toggle="modal"
+                                                                    data-target="#deleteOpinion{{ post.id }}">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                                     height="16"
+                                                                     fill="currentColor" class="bi bi-trash"
+                                                                     viewBox="0 0 16 16">
+                                                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"></path>
+                                                                    <path fill-rule="evenodd"
+                                                                          d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"></path>
+                                                                </svg>
+                                                                Usuń
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        {{ post.text }}
+                                    </div>
+                                </div>
+                            </article>
+                            <!-- Modal -->
+                            <div class="modal fade" id="deleteOpinion{{ post.id }}" tabindex="-1" role="dialog"
+                                 aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="deleteModalLabel">Usunąć opinię?</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij
+                                            </button>
+                                            <form action="{{ url_for("user_activity.delete_scrap_opinion", scrap_opinion_id=post.id) }}"
+                                                  method="POST">
+                                                <input class="btn btn-danger" type="submit" value="Usuń">
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /Modal -->
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </article>
+
+    <!-- Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Usunąć utwór?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
+                    <form action="{{ url_for("user_activity.delete_track", track_id=track.id) }}" method="POST">
+                        <input class="btn btn-danger" type="submit" value="Usuń">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Modal -->
+
+    <a href="{{ url_for('user_activity.tracks') }}" class="btn bg-dark text-white responsive-full">Lista utworów</a>
+    <script>
+        /*window.addEventListener("click", function (event) {
+            var target = event.target
+            if (target.className.split(' ')[0] !="scrap-marking" && target.id != "btn-mark" && target.className.split(' ')[0] != "ck" && target.parentNode.className.split(' ')[0] != "ck") {
+                if (window.getSelection().toString() == "") {
+                    document.getElementById("scrap-view").innerHTML = ""
+                }
+            }
+        });*/
+
+        function getSelectionText() {
+            var text = "";
+            if (window.getSelection) {
+                text = window.getSelection().toString();
+            } else if (document.selection && document.selection.type != "Control") {
+                text = document.selection.createRange().text;
+            }
+            //console.log("pierwsza - " + window.getSelection().anchorOffset + "\n");
+            //console.log("ostatnia - " + window.getSelection().focusOffset + "\n");
+            return text;
+        }
+
+        function clearSelection() {
+            if (document.selection) {
+                document.selection.empty();
+            } else if (window.getSelection) {
+                window.getSelection().removeAllRanges();
+            }
+        }
+
+        window.highlight = function () {
+            if (window.getSelection().toString() != "") {
+                $(".lyrics-text:first").addClass("disable-div");
+                document.getElementById("darkLayer").style.display = "block"
+                document.getElementById("add-scrap-form").style.display = "block"
+                document.getElementById("btn-mark").style.display = "none"
+                document.getElementById("btn-reset").style.display = "block"
+                $(".gear-scraps").hide()
+
+                var selection = window.getSelection().getRangeAt(0);
+                var selectedText = selection.extractContents();
+                var text = ""
+
+                for (i = 0; i < selectedText.childNodes.length; i++) {
+                    var temp = ''
+                    if (selectedText.childNodes[i].nodeName == "BR") {
+                        temp = "<" + selectedText.childNodes[i].nodeName + "/>"
+                    } else if (selectedText.childNodes[i].nodeName != "#text") {
+                        temp = "<" + selectedText.childNodes[i].nodeName + ">" + selectedText.childNodes[i].textContent + "</" + selectedText.childNodes[i].nodeName + ">"
+                    } else {
+                        temp += selectedText.childNodes[i].textContent
+                    }
+                    text += temp
+                }
+                var last_scrap_id = JSON.parse({{ last_id }})
+                var scrap_id = parseInt(last_scrap_id) + 1
+                var span = $("<span class='scrap-marking scrap-piece-" + scrap_id + "' >" + text + "</span>");
+                selection.insertNode(span[0]);
+
+
+                var txt = $('#text-source').html();
+                clearSelection();
+                $("#lyrics_with_scraps").attr("value", txt);
+            }
+        }
+
+        document.getElementById('text-source').addEventListener('mouseup', function (e) {
+            document.getElementById("btn-mark").style.display = "block"
+            document.getElementById("rate-scrap-form").style.display = "none"
+            document.getElementById("scrap-comment").style.display = "none"
+            document.getElementById("scrap-description-container").innerHTML = ''
+            var target = document.getElementById("scrap-view")
+            target.innerHTML = ""
+            var selectedText = getSelectionText()
+            var textnode = document.createTextNode(selectedText);
+            target.appendChild(textnode);
+
+        });
+        var elements = document.getElementsByClassName("scrap-marking");
+
+        /*for (var i = 0; i < elements.length; i++) {
+            elements[i].addEventListener("click", function (event) {
+                var descriptions = JSON.parse({{ scrap_descriptions | tojson }})
+                document.getElementById("add-scrap-form").style.display = "none"
+                document.getElementById("rate-scrap-form").style.display = "block"
+                //console.log(event.target)
+                scrapClass = event.target.className.split(' ')[1]
+                //console.log(scrapClass.split('-')[2])
+                scrapNmb = scrapClass.split('-')[2]
+                var scrapText = event.target.innerText
+                console.log(scrapText)
+                var target = document.getElementById("scrap-body")
+                target.innerHTML = ""
+                var text = descriptions[scrapClass.split('-')[2]]
+                console.log(text)
+                var textnode = document.createTextNode(text);
+                console.log(target)
+                target.appendChild(textnode);
+            });
+        }*/
+
+        function display_comments(scrap_id) {
+            var opinions = $(".opinion")
+            for (var i = 0; i < opinions.length; i++) {
+                var opinion = opinions[i]
+                var opinionNmbClass = opinion.classList[1].split('-')[1];
+                if (parseInt(opinionNmbClass) == parseInt(scrap_id)) {
+                    opinion.style.display = "block"
+                } else {
+                    opinion.style.display = "none"
+                }
+            }
+        }
+//href="/publish/track/3/unpublish"
+        $(".scrap-marking").click(function () {
+            document.getElementById("btn-mark").style.display = "none"
+            document.getElementById("add-scrap-form").style.display = "none"
+            document.getElementById("rate-scrap-form").style.display = "block"
+            document.getElementById('scrap-container').style.visibility = "visible"
+            document.getElementById("scrap-comment").style.display = "block"
+            $("#cke_2_contents").height("80px")
+            var scrapNmbClass = $(this).attr('class').split(' ')[1];
+            var scrapNmb = parseInt(scrapNmbClass.split('-')[2])
+
+            $(".gear-scraps").hide()
+            var idName = "#gear-scrap-" + scrapNmb
+            $(idName).show()
+
+            var descriptions = JSON.parse({{ scrap_descriptions | tojson }})
+            var authors = JSON.parse({{ scrap_authors | tojson }})
+            var scrap_rates_down = JSON.parse({{ scrap_rates_down | tojson }})
+            var scrap_rates_up = JSON.parse({{ scrap_rates_up | tojson }})
+            for (var i = 0; i < scrap_rates_down.length; i++) {
+                if (scrap_rates_down[i].id == scrapNmb) {
+                    $("#rates_down").text(scrap_rates_down[i].rates)
+                    break
+                }
+            }
+            for (var i = 0; i < scrap_rates_up.length; i++) {
+                if (scrap_rates_up[i].id == scrapNmb) {
+                    $("#rates_up").text(scrap_rates_up[i].rates)
+                    break
+                }
+            }
+            $("#scrap-view").html($(this).text())
+            for (var i = 0; i < authors.length; i++) {
+                console.log(authors[i])
+                if (authors[i].id == scrapNmb) {
+
+                    var author = authors[i].author
+                    break
+                }
+            }
+            var userData = " Oznaczone przez - <b>" + author + "</b><br>"
+            $("#scrap-view").prepend(userData)
+
+            for (var i = 0; i < descriptions.length; i++) {
+                if (descriptions[i].id == scrapNmb) {
+                    $("#scrap-description-container").html(descriptions[i].description)
+                    break
+                }
+            }
+
+            document.getElementById('scrap_to_rate').value = scrapNmb
+            document.getElementById('scrap_to_comment').value = scrapNmb
+            display_comments(scrapNmb)
+        });
+        $(".delete-scrap-btn").click(function () {
+
+            var scrapNmbClass = $(this).attr('class').split(' ')[1];
+            var scrapNmb = parseInt(scrapNmbClass.split('-')[1])
+            var spans = $('.scrap-piece-' + scrapNmb);
+            spans.contents().unwrap();
+            var txt = $('#text-source').html();
+            $("#scrap_delete_lyrics-" + scrapNmb).attr("value", txt);
+        });
+    </script>
+{% endblock content %}

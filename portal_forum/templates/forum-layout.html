@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% if title %}
+        <title>{{ title }}</title>
+    {% else %}
+        <title>Tom Waits Forum</title>
+    {% endif %}
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"
+            integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+            crossorigin="anonymous"></script>
+
+    <!-- Bootstrap files (jQuery first, then Popper.js, then Bootstrap JS) -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
+          type="text/css"/>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"
+            type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+</head>
+<body>
+<div class="container">
+    <!-- Content here -->
+    <header class="section-header py-4">
+        <div class="container-logo">
+            <a class="no-style-link" href="{{ url_for("main.forum") }}">
+                <h1>Tom Waits - Forum</h1>
+                <p>Zrozumieć poetę</p>
+            </a>
+        </div>
+    </header> <!-- section-header.// -->
+    <nav class="navbar navbar-dark bg-primary bg-dark text-white navbar-expand-lg">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
+                aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item active">
+                    <a class="nav-link wh-brd-right" href="{{ url_for("main.forum") }}">Strona główna <span
+                            class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for("user_activity.threads") }}">Wątki</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for("user_activity.tracks") }}">Utwory</a>
+                </li>
+
+            </ul>
+            <ul class="navbar-nav my-2 my-md-0">
+
+                {% if current_user.is_authenticated %}
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" style="padding-bottom: 0;padding-top: 0;" href="#"
+                           data-toggle="dropdown">
+                            <img class="rounded-circle account-img" width="50" height="50" src="{{ image_file }}">
+                            {{ current_user.username }}
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item btn-secondary" href="{{ url_for("users.account") }}"> Konto </a>
+                            </li>
+                            <li><a class="dropdown-item btn-secondary" href="{{ url_for("user_activity.user_actions", username=current_user.username) }}">
+                                Aktywność </a>
+                            </li>
+                            {% if current_user.is_admin %}
+                                <li><a class="dropdown-item btn-secondary" href="{{ url_for("main.admin_panel") }}">
+                                    Panel administracyjny </a></li>
+                            {% endif %}
+                            <li>
+                                <div class="dropdown-divider"></div>
+                            </li>
+                            <li><a class="dropdown-item btn-secondary" href="{{ url_for("users.logout") }}">
+                                Wyloguj </a></li>
+                        </ul>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for("users.login") }}">
+                            <button class="btn bg-light text-dark my-2 my-sm-0 responsive-full" type="submit">Zaloguj
+                                się
+                            </button>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for("users.register") }}">
+                            <button class="btn bg-light text-dark my-2 my-sm-0 responsive-full" type="submit">
+                                Zarejestruj się
+                            </button>
+                        </a>
+                    </li>
+                {% endif %}
+                <li class="nav-item active text-middle-height">
+                    <a class="nav-link hv-back-grey responsive-full"
+                       href="{{ url_for("main.home") }}"><b>Portal</b><span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+
+
+</div>
+
+</body>
+</html>

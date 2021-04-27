@@ -1,0 +1,88 @@
+{% extends "portal-layout.html" %}
+{% block content %}
+    <div class="track-nav mt-2">
+        <a href="{{ url_for("main.track", track_id=track.id) }}"
+           class="btn btn-outline-primary-dark responsive-full mb-2">
+            O utworze
+        </a>
+        <a href="{{ url_for("main.scraps", track_id=track.id) }}"
+           class="btn btn-primary-dark responsive-full mb-2">
+            Fragmenty
+        </a>
+        <a href="{{ url_for("main.interpretations", track_id=track.id) }}"
+           class="btn btn-outline-primary-dark responsive-full mb-2">
+
+            Interpretacje
+        </a>
+        <a href="{{ url_for("main.translations", track_id=track.id) }}"
+           class="btn btn-outline-primary-dark responsive-full mb-2">
+
+            Tłumaczenia
+        </a>
+    </div>
+    <article class="media content-section">
+
+        <div class="track-article">
+            <h2 class="article-title">{{ track.title }}</h2>
+            <div class="lyrics-text" id="text-source">
+                <div id="darkLayer" class="darkClass" style="display: none;"></div>
+                {{ tags }}
+            </div>
+            <div class="card border-dark lyrics-description" id="scrap-container">
+                <div class="card-header scrap-header" style="padding-bottom: 0;">
+                    <b>Oznaczony fragment:</b>
+
+                    <p id="scrap-view">
+
+                    </p>
+                </div>
+                <div class="card-body text-dark scrap-body pb-0 pt-0">
+
+                    <div id="scrap-description-container">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </article>
+
+    <a href="{{ url_for('main.tracks') }}" class="btn btn-primary-dark text-white responsive-full">Lista utworów</a>
+    <script>
+        window.onload = function()
+        {
+            var published = JSON.parse({{ scraps_published | tojson }})
+            for (var i = 0; i < published.length; i++) {
+                if (published[i]['is_published'] == '0') {
+                    var spans = $('.scrap-piece-' + published[i]['id']);
+                    spans.contents().unwrap();
+                }
+            }
+        }
+        var elements = document.getElementsByClassName("scrap-marking");
+
+
+        $(".scrap-marking").click(function () {
+            document.getElementById('scrap-container').style.visibility = "visible"
+            var scrapNmbClass = $(this).attr('class').split(' ')[1];
+            var scrapNmb = parseInt(scrapNmbClass.split('-')[2])
+
+            var descriptions = JSON.parse({{ scrap_descriptions | tojson }})
+
+
+            $("#scrap-view").html($(this).text())
+
+            for (var i = 0; i < descriptions.length; i++) {
+                if (descriptions[i].id == scrapNmb) {
+                    $("#scrap-description-container").html(descriptions[i].description)
+                    break
+                }
+            }
+
+        });
+
+    </script>
+{% endblock content %}

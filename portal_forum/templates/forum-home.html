@@ -1,0 +1,122 @@
+{% extends "forum-layout.html" %}
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            Ostatnia aktywność
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead class="thead-primary">
+                <tr>
+                    <th scope="col">Data</th>
+                    <th scope="col">Autor</th>
+                    <th scope="col">Temat</th>
+                    <th scope="col" class="hide-mobile">Odpowiedzi</th>
+                    <th scope="col" class="hide-mobile">Ostatnia aktualizacja</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for thread in threads %}
+                    <tr>
+                        <td>{{ thread.date_posted.strftime('%Y-%m-%d %H:%M') }}</td>
+                        <td>
+                            <a class="mr-2 grey-link"
+                               href="{{ url_for("user_activity.user_actions", username=thread.author.username) }}">{{ thread.author.username }}
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{{ url_for('user_activity.thread', thread_id=thread.id) }}" class="grey-link">
+                                {{ thread.topic }}
+                            </a>
+                        </td>
+                        <td class="hide-mobile">{{ thread.threads|length }}</td>
+                        <td class="hide-mobile">{{ thread.date_last_update.strftime('%Y-%m-%d %H:%M') }}</td>
+                    </tr>
+                {% endfor %}
+
+
+                </tbody>
+            </table>
+
+            <a href="{{ url_for("user_activity.threads") }}"
+               class="btn bg-dark text-white responsive-full responsive-marg-6">Zobacz wszystkie wątki</a>
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for("user_activity.new_thread") }}" class="btn bg-dark text-white responsive-full">
+                    <svg xmlns="url_for('static', filename='/images/plus-circle.svg/')" width="20" height="20"
+                         fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                    </svg>
+                    Rozpocznij nowy wątek
+                </a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            Ostatnio dodane utwory
+        </div>
+        {% if current_user.is_authenticated %}
+            <div class="card-body">
+                <table class="table">
+                    <thead class="thead-primary">
+                    <tr>
+                        <th scope="col">Dodano</th>
+                        <th scope="col">Tytuł</th>
+                        <th scope="col">Albumy</th>
+
+                        <th scope="col" class="hide-mobile">Dodane przez</th>
+                        <th scope="col" class="hide-mobile">Ostatnia aktualizacja</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for track in tracks %}
+                        <tr>
+                            <td>{{ track.date_posted.strftime('%Y-%m-%d %H:%M') }}</td>
+                            <td>
+                                <a href="{{ url_for('user_activity.track', track_id=track.id) }}" class="grey-link">
+                                    {{ track.title }}
+                                </a>
+                            </td>
+                            <td>
+                                {% for album in track.albums %}
+                                    {% if loop.index < track.albums|length %}
+                                        {{ album.title }},
+                                    {% else %}
+                                        {{ album.title }}
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
+                            <td class="hide-mobile">
+                                <a class="grey-link" href="{{ url_for("user_activity.user_actions", username=track.author.username) }}">
+                                    {{ track.author.username }}
+                                </a>
+                            </td>
+                            <td class="hide-mobile">{{ track.date_last_update.strftime('%Y-%m-%d %H:%M') }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+                <a href="{{ url_for("user_activity.tracks") }}"
+                   class="btn bg-dark text-white responsive-full responsive-marg-6">Zobacz wszystkie utwory</a>
+                <a href="{{ url_for("user_activity.new_track") }}" class="btn bg-dark text-white responsive-full">
+                    <svg xmlns="url_for('static', filename='/images/plus-circle.svg/')" width="20" height="20"
+                         fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                    </svg>
+                    Dodaj nowy utwór
+                </a>
+            </div>
+        {% else %}
+            <div class="card-body">
+                <h5 class="card-title">Dyskusje o utworach</h5>
+                <p class="card-text"><a href="{{ url_for("users.login") }}" class="grey-link">Zaloguj się</a> lub <a
+                        class="grey-link" href="{{ url_for("users.register") }}">zarejestruj</a>, żeby brać udział w
+                    dyskusjach.</p>
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock content %}

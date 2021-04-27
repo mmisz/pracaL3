@@ -1,0 +1,213 @@
+{% extends "forum-layout.html" %}
+{% block content %}
+    <article class="media content-section">
+        <div class="article-user-info">
+            <h5>
+                <a class="mr-2 grey-link"
+                   href="{{ url_for("user_activity.user_actions", username=thread.author.username) }}">{{ thread.author.username }}
+                </a>
+            </h5>
+            <img class="rounded-circle article-img"
+                 src="{{ url_for('static', filename='profile_pics/' + thread.author.image_file) }}">
+        </div>
+        <div class="media-body">
+            <div class="article-metadata">
+                <small class="text-muted">
+                    {{ thread.date_posted.strftime('%Y-%m-%d %H:%M') }}
+                    {% if thread.date_posted < thread.date_last_update %}
+                        | Edytowano: {{ thread.date_last_update.strftime('%Y-%m-%d %H:%M') }}
+                    {% endif %}
+                </small>
+                {% if thread.author == current_user or current_user.is_admin %}
+                    <div class="article-gear-btn">
+                        <div>
+                            <button type="button" style="padding: 6px;" class="btn btn-secondary" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-gear dis-block" viewBox="0 0 16 16">
+                                    <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"></path>
+                                    <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"></path>
+                                </svg>
+                            </button>
+                            <div class="dropdown-menu" x-placement="bottom-start"
+                                 style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                {% if thread.author == current_user %}
+                                    <a class="btn btn-secondary dropdown-item"
+                                       href="{{ url_for("user_activity.update_thread",thread_id=thread.id) }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                             fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"></path>
+                                            <path fill-rule="evenodd"
+                                                  d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"></path>
+                                        </svg>
+                                        Popraw
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                {% endif %}
+                                <button type="button" class="btn btn-outline-danger dropdown-item" data-toggle="modal"
+                                        data-target="#deleteModal">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-trash" viewBox="0 0 16 16">
+                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"></path>
+                                        <path fill-rule="evenodd"
+                                              d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"></path>
+                                    </svg>
+                                    Usuń
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+                {% if current_user.is_authenticated %}
+                    <a class="btn btn-secondary" style="padding: 6px; padding-bottom: 3px; padding-top: 1px"
+                       href="{{ url_for("user_activity.thread_reply", thread_id=thread.id) }}">
+
+                        <svg xmlns="url_for('static', filename='/images/plus-circle.svg/')" width="20" height="20"
+                             fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16"
+                             style="margin-bottom: 1px;">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                        </svg>
+                        Odpowiedz
+                    </a>
+                {% endif %}
+            </div>
+            <h2 class="article-title">{{ thread.topic }}</h2>
+            <div>{{ tags }}</div>
+        </div>
+    </article>
+    {% for post in posts %}
+        <article class="media content-section">
+            <div class="article-user-info">
+                <h5>
+                    <a class="mr-2 grey-link"
+                       href="{{ url_for("user_activity.user_actions", username=post.author.username) }}">{{ post.author.username }}
+                    </a>
+                </h5>
+                <img class="rounded-circle article-img"
+                     src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}">
+            </div>
+            <div class="media-body">
+                <div class="article-metadata">
+                    <small class="text-muted">
+                        {{ post.date_posted.strftime('%Y-%m-%d %H:%M') }}
+                        {% if post.date_posted < post.date_last_update %}
+                            | Edytowano: {{ post.date_last_update.strftime('%Y-%m-%d %H:%M') }}
+                        {% endif %}
+                    </small>
+                    {% if post.author == current_user or current_user.is_admin %}
+                        <div class="article-gear-btn">
+                            <div>
+                                <button type="button" style="padding: 6px;" class="btn btn-secondary"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-gear dis-block" viewBox="0 0 16 16">
+                                        <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"></path>
+                                        <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"></path>
+                                    </svg>
+                                </button>
+                                <div class="dropdown-menu" x-placement="bottom-start"
+                                     style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                    {% if post.author == current_user %}
+                                    <a class="btn btn-secondary dropdown-item"
+                                       href="{{ url_for("user_activity.update_thread_post", post_id=post.id, thread_id=thread.id) }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                             fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"></path>
+                                            <path fill-rule="evenodd"
+                                                  d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"></path>
+                                        </svg>
+                                        Popraw
+                                    </a>
+                                        {% endif %}
+                                    <div class="dropdown-divider"></div>
+                                    <button type="button" class="btn btn-outline-danger dropdown-item"
+                                            data-toggle="modal" data-target="#deleteReply{{ post.id }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                             fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"></path>
+                                            <path fill-rule="evenodd"
+                                                  d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"></path>
+                                        </svg>
+                                        Usuń
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if current_user.is_authenticated %}
+                        <a class="btn btn-secondary" style="padding: 6px; padding-bottom: 3px; padding-top: 1px"
+                           href="{{ url_for("user_activity.quote_thread_post",thread_id=thread.id, post_id=post.id) }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                 class="bi bi-chat-right-quote" viewBox="0 0 16 16">
+                                <path d="M2 1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h9.586a2 2 0 0 1 1.414.586l2 2V2a1 1 0 0 0-1-1H2zm12-1a2 2 0 0 1 2 2v12.793a.5.5 0 0 1-.854.353l-2.853-2.853a1 1 0 0 0-.707-.293H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12z"></path>
+                                <path d="M7.066 4.76A1.665 1.665 0 0 0 4 5.668a1.667 1.667 0 0 0 2.561 1.406c-.131.389-.375.804-.777 1.22a.417.417 0 1 0 .6.58c1.486-1.54 1.293-3.214.682-4.112zm4 0A1.665 1.665 0 0 0 8 5.668a1.667 1.667 0 0 0 2.561 1.406c-.131.389-.375.804-.777 1.22a.417.417 0 1 0 .6.58c1.486-1.54 1.293-3.214.682-4.112z"></path>
+                            </svg>
+                            Cytuj
+                        </a>
+                    {% endif %}
+                </div>
+                <div>
+                    {{ replies[loop.index - 1] }}
+                </div>
+            </div>
+        </article>
+        <!-- Modal -->
+        <div class="modal fade" id="deleteReply{{ post.id }}" tabindex="-1" role="dialog"
+             aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModalLabel">Usunąć odpowiedź?</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
+                        <form action="{{ url_for("user_activity.delete_thread_post", post_id=post.id, thread_id=thread.id) }}"
+                              method="POST">
+                            <input class="btn btn-danger" type="submit" value="Usuń">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Modal -->
+    {% endfor %}
+    <!-- Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Usunąć wątek?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
+                    <form action="{{ url_for('user_activity.delete_thread',thread_id=thread.id) }}" method="POST">
+                        <input class="btn btn-danger" type="submit" value="Usuń">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Modal -->
+    {% if current_user.is_authenticated %}
+        <a href="{{ url_for("user_activity.thread_reply", thread_id=thread.id) }}"
+           class="btn bg-dark text-white responsive-full mb-2">
+            <svg xmlns="url_for('static', filename='/images/plus-circle.svg/')" width="20" height="20"
+                 fill="currentColor" class="bi bi-plus-circle margin-b-2" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+            </svg>
+            Dodaj odpowiedź
+        </a>
+    {% endif %}
+    <a href="{{ url_for('user_activity.threads') }}" class="btn bg-dark text-white responsive-full mb-2">
+        Lista wątków</a>
+
+{% endblock content %}

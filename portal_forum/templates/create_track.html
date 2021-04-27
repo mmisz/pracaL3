@@ -1,0 +1,114 @@
+{% extends "forum-layout.html" %}
+{% block content %}
+    <script src="{{ url_for('static', filename='ckeditor-basic/ckeditor.js') }}"></script>
+
+    <div class="content-section">
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="mb-4">{{ legend }}</legend>
+                <div class="form-group">
+                    {{ form.title.label(class="form-control-label") }}
+                    {% if form.title.errors %}
+                        {{ form.title(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.title.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.title(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.lyrics.label(class="form-control-label") }}
+                    {% if form.lyrics.errors %}
+                        {{ form.lyrics(class="form-control form-control-lg is-invalid", name="lyrics", id="lyrics") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.lyrics.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.lyrics(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <script>
+                    CKEDITOR.replace('lyrics');
+                </script>
+                <div class="form-group">
+                    {{ form.lyrics_by.label(class="form-control-label") }}
+                    {% if form.lyrics_by.errors %}
+                        {{ form.lyrics_by(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.lyrics_by.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.lyrics_by(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.date_release.label(class="form-control-label") }}
+                    {% if form.date_release.errors %}
+                        {{ form.date_release(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.date_release.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.date_release(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label">
+                        Albumy
+                    </label>
+                    <table>
+                        {% for album in albums %}
+                            <tr>
+                            {% if album in track_albums %}
+                                <td><input checked type="checkbox" name="albums" value="{{ album.id }}"></td>
+                            {% else %}
+                                <td><input type="checkbox" name="albums" value="{{ album.id }}"></td>
+                            {% endif %}
+
+                                <td> {{ album.title }} ({{ album.date_release }})</td>
+                            </tr>
+
+                        {% endfor %}
+                    </table>
+                </div>
+                <div class="form-group">
+                    {{ form.description.label(class="form-control-label") }}
+                    {% if form.description.errors %}
+                        {{ form.description(class="form-control form-control-lg is-invalid", name="description", id="description") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.description.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.description(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <script>
+                    CKEDITOR.replace('description');
+                </script>
+            </fieldset>
+            <div class="form-group">
+                <button type="submit" class="btn bg-dark text-white responsive-full responsive-marg-6 mb-2">Zapisz</button>
+                {% if track_id is not defined %}
+                    <a href="{{ url_for('user_activity.tracks') }}"
+                       class="btn bg-dark text-white responsive-full mb-2">Lista utworów</a>
+                {% else %}
+                    <a href="{{ url_for('user_activity.track', track_id=track_id) }}"
+                       class="btn bg-dark text-white responsive-full mb-2">Powrót</a>
+                {% endif %}
+
+            </div>
+        </form>
+    </div>
+{% endblock content %}

@@ -1,0 +1,35 @@
+{% extends "portal-layout.html" %}
+{% block content %}
+    <h3 class="mt-2 ml-2">
+        <img class="album_cover responsive-full" width="200px"
+             src="{{ url_for('static', filename='album_covers/' + album.image_file) }}">
+        {{ album.title }}
+
+    </h3>
+    <div>
+        {{ description }}
+    </div>
+    <div class="card">
+        <div class="card-header">
+            Lista utworów:
+        </div>
+        <div class="card-body">
+            <ul style="list-style-type: none;">
+                {% for track in tracks %}
+                        <li class="mb-1">
+                            {{ loop.index }}.
+                            <a href="{{ url_for("main.track", track_id=track.id) }}" class="grey-link title-in-list">
+                                {{ track.title }}
+                            </a>
+                        </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div>
+        <a href="{{ url_for("main.albums") }}"
+           class="btn btn-primary-dark text-white responsive-full responsive-marg-6">Albumy
+        </a>
+    </div>
+
+{% endblock content %}

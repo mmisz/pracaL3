@@ -1,0 +1,32 @@
+{% extends "forum-layout.html" %}
+{% block content %}
+    <script src="{{ url_for('static', filename='ckeditor/ckeditor.js') }}"></script>
+
+    <div class="content-section">
+            <form method="POST">
+                {{ form.hidden_tag() }}
+               <fieldset class="form-group">
+                    <legend class="mb-4">{{ legend }}</legend>
+                    <div class="form-group">
+                        {% if form.reply.errors %}
+                            {{ form.reply(class="form-control form-control-lg is-invalid", name="reply", id="reply") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.reply.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.reply(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <script>
+                        CKEDITOR.replace( 'reply' );
+                    </script>
+                </fieldset>
+                <div class="form-group">
+                        <button type="submit" class="btn bg-dark text-white">Zapisz</button>
+                        <a href="{{ url_for('user_activity.track', track_id=track_id) }}" class="btn bg-dark text-white responsive-full">Powrót</a>
+                </div>
+            </form>
+    </div>
+{% endblock content %}

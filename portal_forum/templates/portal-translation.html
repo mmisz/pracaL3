@@ -1,0 +1,52 @@
+{% extends "portal-layout.html" %}
+{% block content %}
+    <div class="track-nav mt-2">
+        <a href="{{ url_for("main.track", track_id=track.id) }}"
+           class="btn btn-outline-primary-dark responsive-full mb-2">
+            O utworze
+        </a>
+        <a href="{{ url_for("main.scraps", track_id=track.id) }}"
+           class="btn btn-outline-primary-dark responsive-full mb-2">
+            Fragmenty
+        </a>
+        <a href="{{ url_for("main.interpretations", track_id=track.id) }}"
+           class="btn btn-outline-primary-dark responsive-full mb-2">
+
+            Interpretacje
+        </a>
+        <a href="{{ url_for("main.translations", track_id=track.id) }}"
+           class="btn btn-primary-dark responsive-full mb-2">
+
+            Tłumaczenia
+        </a>
+    </div>
+    <article class="media content-section">
+
+        <div class="track-article">
+
+            <h2 class="article-title">{{ track.title }}</h2>
+
+            <div class="lyrics-interpretation-text lyrics-border-right responsive-full">
+                {{ tags }}
+            </div>
+            <div class="mb-3 lyrics-interpretations responsive-full">
+
+                <h3>{{ translation.title }}</h3>
+
+                <div id="interpretation-text">
+                    {{ translation_text }}
+                </div>
+
+            </div>
+
+        </div>
+
+    </article>
+
+
+    <a href="{{ url_for("main.translations", track_id = track.id) }}"
+       class="btn btn-primary-dark text-white responsive-full mb-2">
+        Powrót
+    </a>
+
+{% endblock content %}

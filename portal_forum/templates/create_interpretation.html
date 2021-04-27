@@ -1,0 +1,53 @@
+{% extends "forum-layout.html" %}
+{% block content %}
+    <script src="{{ url_for('static', filename='ckeditor/ckeditor.js') }}"></script>
+
+    <div class="content-section">
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="mb-4">{{ legend }}</legend>
+                <div class="form-group">
+                    {{ form.title.label(class="form-control-label") }}
+                    {% if form.title.errors %}
+                        {{ form.title(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.title.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.title(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {% if form.text.errors %}
+                        {{ form.text(class="form-control form-control-lg is-invalid", name="text", id="text") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.text.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.text(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <script>
+                    CKEDITOR.replace('text');
+                </script>
+            </fieldset>
+            <div class="form-group">
+                <button type="submit" class="btn bg-dark text-white mb-2">Zapisz</button>
+                {% if track_id is not defined %}
+                    <a href="{{ url_for('user_activity.tracks') }}"
+                       class="btn bg-dark text-white responsive-full mb-2">
+                        Lista utworów</a>
+                {% else %}
+                    <a href="{{ url_for('user_activity.interpretation', track_id=track_id, interpretation_id=interpretation_id) }}"
+                       class="btn bg-dark text-white responsive-full mb-2">
+                        Powrót</a>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+{% endblock content %}

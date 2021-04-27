@@ -1,0 +1,57 @@
+{% extends "portal-layout.html" %}
+{% block content %}
+    <h3 class="mt-2 ml-2">
+        Utwory Toma Waitsa
+    </h3>
+    {% for page_num in tracks.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+        {% if page_num %}
+            {% if tracks.page == page_num %}
+                <a class="btn btn-primary-dark mt-2 mb-2"
+                   href="{{ url_for("main.tracks", strona=page_num) }}">{{ page_num }}</a>
+            {% else %}
+                <a class="btn btn-outline-primary-dark mt-2 mb-2"
+                   href="{{ url_for("main.tracks", strona=page_num) }}">{{ page_num }}</a>
+            {% endif %}
+        {% else %}
+            ...
+        {% endif %}
+
+    {% endfor %}
+    <div class="card">
+        <div class="card-body">
+            <ul style="list-style-type: none;">
+                {% for track in tracks.items %}
+                    <li class="mb-1">
+                        <a href="{{ url_for("main.track", track_id=track.id) }}" class="grey-link title-in-list">
+                            <img class="album_cover" width="50px"
+                                 src="{{ url_for('static', filename='album_covers/' + track.albums[0].image_file) }}">
+                            {{ track.title }}
+
+                            ({{ track.date_release }})
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% for page_num in tracks.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+        {% if page_num %}
+            {% if tracks.page == page_num %}
+                <a class="btn btn-primary-dark mt-2 mb-2"
+                   href="{{ url_for("main.tracks", strona=page_num) }}">{{ page_num }}</a>
+            {% else %}
+                <a class="btn btn-outline-primary-dark mt-2 mb-2"
+                   href="{{ url_for("main.tracks", strona=page_num) }}">{{ page_num }}</a>
+            {% endif %}
+        {% else %}
+            ...
+        {% endif %}
+
+    {% endfor %}
+    <div>
+        <a href="{{ url_for("main.home") }}"
+           class="btn btn-primary-dark text-white responsive-full responsive-marg-6">Powrót
+        </a>
+    </div>
+
+{% endblock content %}
