@@ -116,7 +116,7 @@ def thread_reply(thread_id):
 def quote_thread_post(thread_id, post_id):
     post = Thread_Post.query.get_or_404(post_id)
     form = PostForm()
-    date_posted = datetime.strptime(str(post.date_posted), "%Y-%m-%d %H:%M:%S.%f")
+    date_posted = post.date_posted
     date_posted = date_posted.strftime('%Y-%m-%d %H:%M')
     quote = "<div>" \
             "<div style='background:#eeeeee;border:1px solid #cccccc;padding:5px 10px;'>" \

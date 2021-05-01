@@ -32,6 +32,9 @@ def check_image():
 def home():
     return render_template('portal-home.html')
 
+@main.route('/terms')
+def terms():
+    return render_template('terms.html')
 
 @main.route('/forum')
 def forum():

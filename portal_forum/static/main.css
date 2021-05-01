@@ -11,6 +11,28 @@
 
 }
 
+.forum_img {
+    width: 100%;
+}
+
+#forum_header_img {
+    width: 120px;
+}
+
+#colage {
+    text-align: center;
+}
+
+#colage img {
+    width: 24.5%;
+    display: inline-block;
+}
+
+.header-text {
+    display: inline-block;
+    vertical-align: text-top;
+}
+
 .bg-primary-dark {
     background: #0066cc;
 }
@@ -348,8 +370,9 @@ a.article-title:hover {
 
 @media only screen and (max-width: 1000px) {
     .media {
-    display: block;
+        display: block;
     }
+
     .lyrics-description {
         display: block;
         min-width: 100%;
@@ -366,6 +389,14 @@ a.article-title:hover {
 @media only screen and (max-width: 768px) {
     .responsive-block {
         display: block;
+    }
+
+    .responsive-none {
+        display: none !important;
+    }
+
+    #colage img {
+        width: 49%;
     }
 
     .album_cover {
@@ -454,6 +485,10 @@ a.article-title:hover {
 
     .hide-mobile {
         display: none;
+    }
+
+    .header-text h1 {
+        font-size: 1.5rem;
     }
 
     .h1, h1 {

@@ -21,15 +21,22 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"
             type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
 </head>
 <body>
 <div class="container">
     <!-- Content here -->
-    <header class="section-header py-4">
+    <header class="section-header">
         <div class="container-logo">
             <a class="no-style-link" href="{{ url_for("main.forum") }}">
-                <h1>Tom Waits - Forum</h1>
-                <p>Zrozumieć poetę</p>
+                <div style="display: inline-block">
+                    <img id="forum_header_img" src="{{ url_for('static', filename="images/Tom-Waits_portrait.jpg") }}">
+                </div>
+                <div class="header-text" style="display: inline-block">
+                    <h1>Tom Waits - Forum</h1>
+                    <p>Zrozumieć poezję</p>
+                </div>
             </a>
         </div>
     </header> <!-- section-header.// -->
@@ -51,6 +58,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for("user_activity.tracks") }}">Utwory</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for("main.terms") }}">Regulamin</a>
+                </li>
 
             </ul>
             <ul class="navbar-nav my-2 my-md-0">
@@ -66,7 +76,8 @@
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item btn-secondary" href="{{ url_for("users.account") }}"> Konto </a>
                             </li>
-                            <li><a class="dropdown-item btn-secondary" href="{{ url_for("user_activity.user_actions", username=current_user.username) }}">
+                            <li><a class="dropdown-item btn-secondary"
+                                   href="{{ url_for("user_activity.user_actions", username=current_user.username) }}">
                                 Aktywność </a>
                             </li>
                             {% if current_user.is_admin %}
