@@ -35,7 +35,7 @@
 <div class="container">
     <header class="section-header">
         <div class="container-logo">
-            <a class="no-style-link" href="{{ url_for("main.forum") }}">
+            <a class="no-style-link" href="{{ url_for("main.home") }}">
                 <div style="display: inline-block">
                     <img id="forum_header_img" src="{{ url_for('static', filename="images/Tom-Waits_portrait.jpg") }}">
                 </div>
@@ -64,7 +64,7 @@
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="{{ url_for("main.albums") }}"> Albumy </a></li>
                         <li><a class="dropdown-item" href="{{ url_for("main.tracks") }}"> Utwory </a></li>
-                        <li><a class="dropdown-item" href="#"> Filmy </a></li>
+                        <li><a class="dropdown-item" href="{{ url_for("main.movies") }}"> Filmy </a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -77,7 +77,7 @@
                 </li>
             </ul>
             <ul class="navbar-nav my-2 my-md-0">
-                <li class="nav-item">
+                <li class="nav-item active text-middle-height">
                     <a class="nav-link" href="{{ url_for("main.forum") }}">
                         <button class="btn btn-primary-dark my-2 my-sm-0 responsive-full" type="submit"><b>Forum</b>
                         </button>

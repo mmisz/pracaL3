@@ -1,10 +1,12 @@
 {% extends "forum-layout.html" %}
 {% block content %}
     <div id="colage">
-    <img class="forum_img" src="{{ url_for('static', filename="images/3619810051_02c3dbe30d_e.jpg") }}">
-    <img class="forum_img" src="{{ url_for('static', filename="images/3619810751_5a91292856_e.jpg") }}">
-    <img class="forum_img responsive-none" src="{{ url_for('static', filename="images/3620628636_4519558c9d_e.jpg") }}">
-    <img class="forum_img responsive-none" src="{{ url_for('static', filename="images/3620628766_a92f1584b4_e.jpg") }}">
+        <img class="forum_img" src="{{ url_for('static', filename="images/3619810051_02c3dbe30d_e.jpg") }}">
+        <img class="forum_img" src="{{ url_for('static', filename="images/3619810751_5a91292856_e.jpg") }}">
+        <img class="forum_img responsive-none"
+             src="{{ url_for('static', filename="images/3620628636_4519558c9d_e.jpg") }}">
+        <img class="forum_img responsive-none"
+             src="{{ url_for('static', filename="images/3620628766_a92f1584b4_e.jpg") }}">
     </div>
     <div class="card">
         <div class="card-header">
@@ -14,8 +16,8 @@
             <table class="table">
                 <thead class="thead-primary">
                 <tr>
-                    <th scope="col">Data</th>
-                    <th scope="col">Autor</th>
+                    <th scope="col">Dodano</th>
+                    <th scope="col">Dodane przez</th>
                     <th scope="col">Temat</th>
                     <th scope="col" class="hide-mobile">Odpowiedzi</th>
                     <th scope="col" class="hide-mobile">Ostatnia aktualizacja</th>
@@ -36,7 +38,11 @@
                             </a>
                         </td>
                         <td class="hide-mobile">{{ thread.threads|length }}</td>
-                        <td class="hide-mobile">{{ thread.date_last_update.strftime('%Y-%m-%d %H:%M') }}</td>
+                        {% if thread.threads|length > 0 and thread.threads[thread.threads|length-1].date_posted > thread.date_last_update %}
+                            <td class="hide-mobile">{{ thread.threads[thread.threads|length-1].date_posted.strftime('%Y-%m-%d %H:%M') }}</td>
+                        {% else %}
+                            <td class="hide-mobile">{{ thread.date_last_update.strftime('%Y-%m-%d %H:%M') }}</td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
 
@@ -94,11 +100,16 @@
                                 {% endfor %}
                             </td>
                             <td class="hide-mobile">
-                                <a class="grey-link" href="{{ url_for("user_activity.user_actions", username=track.author.username) }}">
+                                <a class="grey-link"
+                                   href="{{ url_for("user_activity.user_actions", username=track.author.username) }}">
                                     {{ track.author.username }}
                                 </a>
                             </td>
-                            <td class="hide-mobile">{{ track.date_last_update.strftime('%Y-%m-%d %H:%M') }}</td>
+                            {% if track.comments|length > 0 and track.comments[track.comments|length-1].date_posted > track.date_last_update %}
+                                <td class="hide-mobile">{{ track.comments[track.comments|length-1].date_posted.strftime('%Y-%m-%d %H:%M') }}</td>
+                            {% else %}
+                                <td class="hide-mobile">{{ track.date_last_update.strftime('%Y-%m-%d %H:%M') }}</td>
+                            {% endif %}
                         </tr>
                     {% endfor %}
                     </tbody>

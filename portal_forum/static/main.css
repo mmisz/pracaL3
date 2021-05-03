@@ -304,6 +304,25 @@ a.article-title:hover {
     text-decoration: none;
 }
 
+.col-lg-4 {
+    margin-bottom: 10px;
+}
+
+.col-lg-4 .card {
+    height: 100%;
+}
+
+.movie-card-text {
+    position: relative;
+}
+
+.btn-movie-link {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
 .article-svg {
     width: 25px;
     height: 25px;
@@ -334,7 +353,9 @@ a.article-title:hover {
 .table td, .table th {
     padding: 0.5rem;
 }
-
+.card pre{
+    margin: 0;
+}
 @media only screen and (max-width: 1100px) {
     #content {
         padding-left: 5%;
@@ -368,9 +389,15 @@ a.article-title:hover {
     z-index: 100;
 }
 
+
 @media only screen and (max-width: 1000px) {
     .media {
         display: block;
+    }
+
+    .col-lg-4 {
+        padding-right: 100px;
+        padding-left: 100px;
     }
 
     .lyrics-description {
@@ -384,11 +411,20 @@ a.article-title:hover {
         max-width: 100%;
         margin-right: 0;
     }
+
 }
 
 @media only screen and (max-width: 768px) {
     .responsive-block {
         display: block;
+    }
+    .responsive-full {
+        width: 100%;
+        text-align: center;
+    }
+    .col-lg-4 {
+        padding-right: 80px;
+        padding-left: 80px;
     }
 
     .responsive-none {
@@ -419,7 +455,6 @@ a.article-title:hover {
     .content-section {;
         padding-top: 5px;
         border: none;
-        border-top: 1px solid;
         border-radius: 0;
     }
 
@@ -472,11 +507,6 @@ a.article-title:hover {
     .container-logo {
         padding-left: 0;
         padding-right: 0;
-    }
-
-    .responsive-full {
-        width: 100%;
-        text-align: center;
     }
 
     .responsive-marg-6 {

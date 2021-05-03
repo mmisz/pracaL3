@@ -34,7 +34,10 @@ def home():
 
 @main.route('/terms')
 def terms():
-    return render_template('terms.html')
+    return render_template('terms.html', image_file=check_image())
+@main.route('/movies')
+def movies():
+    return render_template('movies.html')
 
 @main.route('/forum')
 def forum():
