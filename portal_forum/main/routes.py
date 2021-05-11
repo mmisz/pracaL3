@@ -39,11 +39,16 @@ def terms():
 def movies():
     return render_template('movies.html')
 
+@main.route('/about')
+def about():
+    return render_template('about.html')
+
 @main.route('/forum')
 def forum():
     threads = Thread.query.order_by(desc(Thread.date_last_update)).limit(5).all()
     tracks = Track.query.order_by(desc(Track.date_last_update)).limit(5).all()
     return render_template('forum-home.html', image_file=check_image(), threads=threads, tracks=tracks)
+
 
 
 @main.route('/admin_panel', methods=['GET', 'POST'])

@@ -58,7 +58,7 @@
                     <a class="nav-link wh-brd-right" href="{{ url_for("main.home") }}">Strona główna <span
                             class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item"><a class="nav-link" href="#"> O stronie </a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for("main.about") }}"> O stronie </a></li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"> Twórczość </a>
                     <ul class="dropdown-menu">
@@ -90,7 +90,19 @@
     <div id="content">
         {% block content %}{% endblock %}
     </div>
+<hr>
+    <div id="footer">
 
+        <p style="text-align: center">
+            Autorem niniejszego serwisu jest Miłosz Miszkurka
+        </p>
+        <p>
+            Serwis ten stanowi integralną część pracy licencjackiej (kierunek: Elektroniczne Przetwarzanie Informacji),
+            przygotowanej pod kierunkiem dr. Piotra Jordana Śliwińskiego na Wydziale Zarządzania i Komunikacji
+            Społecznej Uniwersytetu Jagiellońskiego.
+        </p>
+
+    </div>
 </div><!-- container //  -->
 </body>
 </html>
