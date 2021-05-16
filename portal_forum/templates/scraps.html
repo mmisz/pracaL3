@@ -121,7 +121,7 @@
                 {{ tags }}
             </div>
             <div class="card border-dark lyrics-description" id="scrap-container">
-                <div class="card-header scrap-header" style="padding-bottom: 0;">
+                <div class="card-header scrap-header" style="background-color: aliceblue; color: black; padding-bottom: 0;">
                     <b>Oznaczony fragment:</b>
                     {% for element in scrap_authors_raw %}
                         {% if element.author == current_user or current_user.is_admin %}

@@ -1,7 +1,297 @@
 {% extends "portal-layout.html" %}
 {% block content %}
-    <h3 class="mt-2 ml-2">
-        O stronie
+    <h3 class="mt-2 ml-2 main-header">
+        Zrozumieć poezję – portal i forum fanów Toma Waitsa
     </h3>
+    <div class="one-img">
+        <div>
+            <img style="margin-bottom: 10px" src="http://farm3.static.flickr.com/2468/3752111967_caa66f81f0.jpg"
+                 alt="Tom Waits by Michael O'Brien">
+        </div>
+        <div class="quote">
+            <blockquote>
+                <h4>
+                    „A […] Tom Waits? Jak zwykle, wymyka się wszelkim podziałom.”
+                </h4>
+            </blockquote>
+            <pre>
+Tomasz Rabsztyn, W Koloseum. O Tomie Waitsie (2019)
+            </pre>
+            <blockquote>
+                <h4>
+                    „Zmienia się, ewoluuje. Jest artystą, który wciąż potrafi zadziwiać i zaryzykować,
+                    stawiając przed publicznością na szali siebie i swoją trzydziestoletnią karierę.”
+                </h4>
+            </blockquote>
+            <pre>
+Say S. Jacobs, Dzikie Lata. Muzyka i mit Toma Waitsa (2006)
+            </pre>
+        </div>
 
+    </div>
+    <b class="small_header" style="clear: both;">
+        Tom Waits – piosenkarz, muzyk, kompozytor, aktor, a może przede wszystkim – poeta. Niniejszy serwis poświęcono
+        jego osobie.
+    </b>
+    <hr>
+    <div class="card card col-lg-4 d-lg-block" style="padding: 0">
+        <div class="card-header">
+            Spis treści
+        </div>
+        <ul style="margin-top: 0;">
+            <li>
+                <a href="#start">Od czego zacząć?</a>
+            </li>
+            <li>
+                <a href="#how">Jak to działa?</a>
+            </li>
+            <li>
+                <a href="#working_text">Metody pracy nad tekstem</a>
+            </li>
+            <ol>
+                <li>
+                    <a href="#interpretation">Interpretacje</a>
+                </li>
+                <li>
+                    <a href="#translation">Tłumaczenia</a>
+                </li>
+                <li>
+                    <a href="#scrap">Oznaczanie fragmentów utworu</a>
+                </li>
+            </ol>
+        </ul>
+        <ul>
+            <li>
+                <a href="#bibliography">Bibliografia</a>
+            </li>
+            <li>
+                <a href="#links">Linki zewnętrzne</a>
+            </li>
+        </ul>
+    </div>
+    <a name="start"></a>
+    <b class="small_header">&nbsp;Od czego zacząć?</b>
+    Serwis <i>Tom Waits Zrozumieć poezję</i> składa się z dwóch części:
+    <ul style="margin-top: 0">
+        <li>
+            Portalu, który stanowi kompendium wiedzy o Waitsie. Znajdziemy więc tutaj informacje na temat artysty i jego
+            dorobku artystycznego.
+            <br>
+            Interpretacje, tłumaczenia i opracowania utworów są efektem prac naszej Społeczności!
+        </li>
+        <li>
+            Forum – miejsca, w którym Społeczność fanów Toma Waitsa może dzielić się swoją wiedzą, w celu dotarcia do
+            sedna twórczości poety. <br>Nasza platforma oferuje szereg narzędzi ułatwiających opracowywanie tekstów,
+            prowadzenie dyskusji
+            i ocenę prac innych użytkowników.<br>
+            <p style="margin-top: 10px">
+                By dołączyć do naszej Społeczności – <a href="{{ url_for("users.register") }}">utwórz konto</a> na
+                Forum.
+            </p>
+        </li>
+    </ul>
+    <a name="how"></a>
+    <b class="small_header">&nbsp;Jak to działa?</b>
+    <ol style="margin-top: 0">
+        <li>
+            Członkowie Społeczności publikują treści na Forum. Dostęp do nich i do toczącej się wokół dyskusji jest
+            dostępny wyłącznie dla Społeczności Forum.
+        </li>
+        <li>
+            Administrator, wraz z innymi Użytkownikami mogą brać udział w dyskusji na temat przedstawionych pomysłów i
+            oceniać ich wartość merytoryczną.
+        </li>
+        <li>
+            Po pozytywnej weryfikacji, Administrator może zdecydować o publikacji danego postu.
+        </li>
+        <li>
+            Po publikacji zawartość posta pojawia się na Portalu. Tutaj staje się ogólnodostępna dla wszystkich
+            odwiedzających serwis.
+        </li>
+    </ol>
+    <a name="working-text"></a>
+    <b class="small_header">&nbsp;Praca nad tekstem</b>
+    <p>
+        Pierwszym krokiem jest dodanie nowego utworu. Specjalny panel pozwala na dodanie wszelkich niezbędnych
+        informacji o
+        danym dziele.
+        <br>
+        W tym celu, na stronie głównej Forum lub w zakładce utwory, wciśnij przycisk
+        <a href="#" class="btn bg-dark text-white responsive-full">
+            <svg xmlns="url_for('static', filename='/images/plus-circle.svg/')" width="20" height="20"
+                 fill="currentColor"
+                 class="bi bi-plus-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"></path>
+            </svg>
+            Dodaj nowy utwór
+        </a>
+    </p>
+    <p>
+        Specjalny edytor pozwala na dodanie wszelkich niezbędnych informacji o danym dziele i prawie dowolne
+        sformatowanie treści.
+        <br>
+        Więcej o używanym w serwisie edytorze tekstu możesz dowiedzieć się na stronie
+        <a href="https://ckeditor.com/ckeditor-4/" alt="CKEditor4 site">
+            CKEditor 4
+        </a>
+    </p>
+    <div>
+        <b>
+            Nad tekstami można pracować na 3 sposoby:
+        </b>
+        <ul style="margin-top: 0">
+            <li>
+                <a name="interpretation"></a>
+                <b>Tworząc <i>Interpretacje</i></b>
+                <br>
+                Jak to zrobić?
+                <ol style="margin-top: 0">
+                    <li>
+                        Wybierz utwór z listy i wejdź w zakładkę <i>Interpreatacje</i> i kliknij przycisk
+                        <a class="btn btn-secondary" style="padding: 6px; padding-bottom: 3px; padding-top: 1px"
+                           href="#">
+
+                            <svg xmlns="url_for('static', filename='/images/plus-circle.svg/')" width="20" height="20"
+                                 fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16"
+                                 style="margin-bottom: 1px;">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
+                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"></path>
+                            </svg>
+                            Zinterpretuj
+                        </a>:
+                        <br>
+                        <img class="instruction_img"
+                             src="{{ url_for('static', filename="images/interpretation_1.jpg") }}">
+                    </li>
+                    <li>
+                        Korzystając z edytora dodaj interpretację i zapisz ją:
+                        <br>
+                        <img class="instruction_img"
+                             src="{{ url_for('static', filename="images/interpretation_2.jpg") }}">
+                    </li>
+                    <li>
+                        Dodana interpretacja będzie dostępna w zakładce <i>Interpretacje</i> utworu:
+                        <br>
+                        <img class="instruction_img"
+                             src="{{ url_for('static', filename="images/interpretation_3.jpg") }}">
+                        <br>
+                        Teraz Użytkownicy mogą ją komentować, oceniać i sugerować zmiany!
+                    </li>
+                </ol>
+            </li>
+            <li>
+                <a name="translation"></a>
+                <b>Tworząc <i>Tłumaczenia</i></b>
+                <br>
+                Jak to zrobić?
+                <br>
+                <ol style="margin-top: 0">
+                    <li>
+                        Przejdź do zakładki <i>Tłumaczenia</i> i działaj analogicznie jak w przypadku <a
+                            href="#interpretation"><i>Interpretacji</i></a>.
+                    </li>
+                </ol>
+            </li>
+            <li>
+                <a name="scrap"></a>
+                <b>Oznaczając fragment utworu</b>
+                <br>
+                Jak to zrobić?
+                <ol style="margin-top: 0">
+                    <li>
+                        Przejdź do zakładki <i>Fragmenty</i> na stronie utworu.
+                    </li>
+                    <li>
+                        Oznacz fragment tekstu i wciśnij przycisk
+                        <a class="btn btn-dark" style="padding: 6px; padding-bottom: 3px; padding-top: 1px" href="#">
+                            Oznacz
+                        </a>
+                        <br>
+                        <img style="display: block" class="instruction_img"
+                             src="{{ url_for('static', filename="images/scrap_1.jpg") }}">
+                    </li>
+                    <li>
+                        Jeśli oznaczono niepoprawny fragment można zresetować oznaczenie przyciskiem
+                        <a class="btn btn-dark" style="padding: 6px; padding-bottom: 3px; padding-top: 1px" href="#">
+                            Resetuj
+                        </a>.
+                        <br>
+                        Poniżej znajduje się pole tekstowe. Po umieszczeniu w nim interpretacji należy użyć
+                        przycisku
+                        <a class="btn btn-dark" style="padding: 6px; padding-bottom: 3px; padding-top: 1px" href="#">
+                            Zapisz
+                        </a>.
+                        <img style="display: block" class="instruction_img"
+                             src="{{ url_for('static', filename="images/scrap_2.jpg") }}">
+                    </li>
+                    <li>Kliknięcie w oznaczony tekst umożliwia:
+                        <ul>
+                            <li>dostęp do zapisanej interpretacji,</li>
+                            <li>ocenę interpretacji,</li>
+                            <li>dostęp do sekcji opinii.</li>
+                        </ul>
+                        <img style="display: block" class="instruction_img"
+                             src="{{ url_for('static', filename="images/scrap_3.jpg") }}">
+                    </li>
+                </ol>
+            </li>
+
+        </ul>
+    </div>
+
+
+    <div class="card" style="padding: 0; width: 100%">
+        <a name="bibliography"></a>
+        <div id="filmography-toggle" class="card-header header-btn">
+            Bibliografia
+        </div>
+        <ul id="filmography-list">
+            <li>Rabsztyn T., W Koloseum. O Tomie Waitsie, Gdańsk, Oficynka 2019</li>
+            <li>Jacobs J.S., Dzikie Lata. Muzyka i mit Toma Waitsa, przeł. J. Rybski, Wrocław, Wydawnictwo
+                Dolnośląskie 2006
+            </li>
+            <li>Staszewski K., Piosenki Toma Waitsa, teksty w tłumaczeniu Romana Kołakowskiego, VIP Production,
+                Luna Music 2003
+            </li>
+            <li>
+                Chaciński B., Mistrz świata zadupia, Polifonia, 8 maja 2013,
+                <pre>https://polifonia.blog.polityka.pl/2013/05/08/mistrz-swiata-zadupia/</pre>
+            </li>
+            <li>
+                Chaciński B., Tom Waits: Człowiek wrzask, , „Wyż Niż”, wiosna 2003,
+                <pre>
+https://chacinski.wordpress.com/wrzutnia/tom-waits-czlowiek-wrzask/
+            </pre>
+            </li>
+
+        </ul>
+    </div>
+    <div class="card" style="padding: 0; width: 100%">
+        <a name="links"></a>
+        <div id="links-toggle" class="card-header header-btn">
+            Linki zewnętrzne
+        </div>
+        <ul id="link-list">
+            <li>Rabsztyn T., W Koloseum. O Tomie Waitsie, Gdańsk, Oficynka 2019</li>
+            <li>Jacobs J.S., Dzikie Lata. Muzyka i mit Toma Waitsa, przeł. J. Rybski, Wrocław, Wydawnictwo
+                Dolnośląskie 2006
+            </li>
+            <li>Staszewski K., Piosenki Toma Waitsa, teksty w tłumaczeniu Romana Kołakowskiego, VIP Production,
+                Luna Music 2003
+            </li>
+            <li>
+                Chaciński B., Mistrz świata zadupia, Polifonia, 8 maja 2013,
+                <pre>https://polifonia.blog.polityka.pl/2013/05/08/mistrz-swiata-zadupia/</pre>
+            </li>
+            <li>
+                Chaciński B., Tom Waits: Człowiek wrzask, , „Wyż Niż”, wiosna 2003,
+                <pre>
+https://chacinski.wordpress.com/wrzutnia/tom-waits-czlowiek-wrzask/
+            </pre>
+            </li>
+
+        </ul>
+    </div>
+    <script src="static/js/script.js" type="text/javascript"></script>
 {% endblock content %}

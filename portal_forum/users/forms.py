@@ -12,6 +12,7 @@ class RegistrationForm(FlaskForm):
     password = PasswordField('Hasło', validators=[DataRequired()])
     confirm_password = PasswordField('Powtórz hasło',
                                      validators=[DataRequired(), EqualTo('password')])
+    checkbox = BooleanField('Oświadczam, że zapoznałem/am się z Regulaminem Forum', validators=[DataRequired(), ])
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
         if user:

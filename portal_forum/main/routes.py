@@ -39,6 +39,10 @@ def terms():
 def movies():
     return render_template('movies.html')
 
+@main.route('/books')
+def books():
+    return render_template('books.html')
+
 @main.route('/about')
 def about():
     return render_template('about.html')

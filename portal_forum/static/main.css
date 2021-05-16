@@ -1,3 +1,63 @@
+html {
+    height: 100%;
+}
+
+body {
+    min-height: 100%;
+    position: relative;
+    padding-bottom: 100px;
+    background-color: whitesmoke;
+}
+
+#link-list {
+    display: none;
+}
+
+.card-img, .card-img-top {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.btn {
+    padding-bottom: 8px;
+}
+
+.small_header {
+    font-size: 1.2em;
+    display: block;
+}
+
+.main-header {
+    margin-bottom: 20px;
+}
+
+.one-img {
+    width: 100%;
+    text-align: center;
+}
+
+.card-header {
+    background-color: dimgrey;
+    color: white;
+}
+
+.one-img img {
+    width: 40%;
+    float: left;
+    display: inline-block;
+}
+
+.one-img .quote {
+    width: 59%;
+    text-align: left;
+    display: inline-block;
+
+}
+
+.one-img blockquote, pre {
+    text-align: left;
+}
+
 .content-section {
     background: #ffffff;
     padding: 0;
@@ -8,6 +68,30 @@
 }
 
 .btn-primary-dark:hover {
+
+}
+
+#filmography-list {
+    display: none;
+}
+
+.contents {
+    width: 40%;
+}
+
+.header-btn {
+    background: #0066cc;
+    color: #fff;
+    border-radius: 0.25rem 0.25rem 0 0;
+    cursor: pointer;
+}
+
+.header-btn:hover {
+    background: #0851a5;
+    color: #fff;
+}
+
+.header-btn:hover {
 
 }
 
@@ -195,10 +279,20 @@ blockquote {
     padding-left: 10%;
     padding-right: 10%;
 }
+
+#footer div {
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
 #footer {
-        padding-left: 10%;
-        padding-right: 10%;
-    }
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100px;
+}
+
 .no-style-link {
     text-decoration: none;
     color: black;
@@ -299,7 +393,6 @@ a.article-title:hover {
 
 .grey-link:hover {
     color: #343a40 !important;
-    text-decoration: none;
 }
 
 .article-metadata a:hover {
@@ -358,6 +451,12 @@ a.article-title:hover {
     margin: 0;
 }
 
+@media only screen and (max-width: 1300px) {
+    .instruction_img {
+        width: 80%;
+    }
+}
+
 @media only screen and (max-width: 1100px) {
     #content {
         padding-left: 5%;
@@ -414,8 +513,21 @@ a.article-title:hover {
 }
 
 @media only screen and (max-width: 1000px) {
+
+    .one-img img {
+        width: 100%;
+    }
+
+    .instruction_img {
+        width: 100%;
+    }
+
     .media {
         display: block;
+    }
+
+    .contents {
+        width: 100%;
     }
 
     .col-lg-4 {
@@ -466,6 +578,10 @@ a.article-title:hover {
     .responsive-full {
         width: 100%;
         text-align: center;
+    }
+
+    .contents {
+        width: 100%;
     }
 
     .col-lg-4 {
