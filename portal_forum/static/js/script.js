@@ -4,6 +4,9 @@
 $("#links-toggle").click(function () {
         $("#link-list").toggle();
     });
+$("#sources-toggle").click(function () {
+        $("#source-list").toggle();
+    });
         $(".btn-expand").click(function () {
             id = $(this).attr("id");
             number = id.split("-")[id.split("-").length - 1];
