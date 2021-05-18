@@ -3,17 +3,65 @@ html {
 }
 
 body {
+    width: 100%;
     min-height: 100%;
     position: relative;
     padding-bottom: 100px;
     background-color: whitesmoke;
 }
 
+.tiles-row {
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+}
+.last-tile{
+  width: 80.5%;
+}
+.tile {
+    width: 40%;
+    display: inline-block;
+    border: none;
+    font-size: 1.2em;
+}
+
+.tile-btn {
+    width: 100%;
+    border: none;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.tiles {
+    margin-top: 20px;
+}
+
+.home-descr {
+    width: 80%;
+    margin: 0 auto
+}
+
+#carouselExampleCaptions {
+    width: 100%;
+    margin: 0 auto;
+    background-color: #2e383c;
+}
+
+.w-100 {
+    width: auto !important;
+    margin: 0 auto;
+    height: 450px;
+}
+
+#carouselExampleCaptions img {
+
+}
+
 #link-list {
     display: none;
 }
 
-#source-list{
+#source-list {
     display: none;
 }
 
@@ -455,6 +503,22 @@ a.article-title:hover {
     margin: 0;
 }
 
+.carousel-caption {
+    padding: 0;
+    margin: 0;
+    margin-bottom: 15px;
+}
+
+.carousel-caption p {
+    padding: 0;
+    margin: 0;
+}
+
+.carousel-caption h5 {
+    padding: 0;
+    margin: 0;
+}
+
 @media only screen and (max-width: 1300px) {
     .instruction_img {
         width: 80%;
@@ -462,6 +526,10 @@ a.article-title:hover {
 }
 
 @media only screen and (max-width: 1100px) {
+    .w-100 {
+        height: 300px;
+    }
+
     #content {
         padding-left: 5%;
         padding-right: 5%;
@@ -517,6 +585,18 @@ a.article-title:hover {
 }
 
 @media only screen and (max-width: 1000px) {
+    .one-img .quote {
+        width: 100%;
+    }
+
+    .home-descr {
+        width: 100%;
+        margin: 0 auto
+    }
+
+    .about-quote {
+        text-align: left;
+    }
 
     .one-img img {
         width: 100%;
@@ -556,7 +636,15 @@ a.article-title:hover {
         flex-shrink: 0;
         width: 90%;
     }
-
+.last-tile{
+  width: 80%;
+}
+    .tile {
+        width: 80%;
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 10px;
+    }
 }
 
 @media (min-width: 992px) {
@@ -565,9 +653,29 @@ a.article-title:hover {
         flex: 0 0 49%;
         max-width: 49%;
     }
+
 }
 
 @media only screen and (max-width: 768px) {
+    .w-100 {
+        height: 200px;
+    }
+
+    .carousel-caption {
+        padding: 0;
+        margin: 0;
+        margin-bottom: 10px;
+    }
+
+    .carousel-caption p {
+        font-size: 0.5em;
+        margin: 0;
+    }
+
+    .carousel-caption h5 {
+        font-size: 0.6em;
+        margin: 0;
+    }
 
     .card-img, .card-img-bottom, .card-img-top {
         -ms-flex-negative: 0;

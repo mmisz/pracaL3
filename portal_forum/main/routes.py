@@ -43,6 +43,10 @@ def movies():
 def books():
     return render_template('books.html')
 
+@main.route('/live')
+def live():
+    return render_template('live.html')
+
 @main.route('/about')
 def about():
     return render_template('about.html')
