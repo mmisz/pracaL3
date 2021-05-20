@@ -23,7 +23,7 @@ user_activity = Blueprint('user_activity', __name__)
 def threads():
     strona = request.args.get('strona', 1, type=int)
     threads = Thread.query.order_by(desc(Thread.date_last_update)).paginate(page=strona, per_page=5)
-    return render_template('threads.html', title="Wątki", image_file=check_image(), threads=threads)
+    return render_template('threads.html', title="Wątki | Tom Waits", image_file=check_image(), threads=threads)
 
 
 @user_activity.route('/thread/<int:thread_id>', methods=['GET', 'POST'])
@@ -36,7 +36,7 @@ def thread(thread_id):
     replies = []
     for post in posts:
         replies.append(Markup(post.reply))
-    return render_template('thread.html', title=thread.topic, image_file=check_image(), thread=thread, tags=tags,
+    return render_template('thread.html', title=thread.topic+" | Tom Waits", image_file=check_image(), thread=thread, tags=tags,
                            posts=posts, replies=replies)
 
 
@@ -50,7 +50,7 @@ def new_thread():
         db.session.commit()
         flash("Wątek został dodany", "success")
         return redirect(url_for('main.forum'))
-    return render_template('create_thread.html', title="Nowy wątek",
+    return render_template('create_thread.html', title="Nowy wątek | Tom Waits",
                            legend="Rozpocznij nowy wątek", form=form, image_file=check_image())
 
 
@@ -71,7 +71,7 @@ def update_thread(thread_id):
     elif request.method == "GET":
         form.topic.data = thread.topic
         form.description.data = thread.description
-    return render_template('create_thread.html', title="Edytuj wątek",
+    return render_template('create_thread.html', title="Edytuj wątek | Tom Waits",
                            legend="Edytuj wątek", form=form, image_file=check_image(), thread_id=thread_id)
 
 
@@ -106,7 +106,7 @@ def thread_reply(thread_id):
         db.session.commit()
         flash("Odpowiedź została dodana", "success")
         return redirect(url_for('user_activity.thread', thread_id=thread_id))
-    return render_template('thread_reply.html', title="Rozwiń wątek",
+    return render_template('thread_reply.html', title="Rozwiń wątek | Tom Waits",
                            legend="Odpowiedz", form=form, image_file=check_image(),
                            thread_id=thread_id, reply_id=None)
 
@@ -132,7 +132,7 @@ def quote_thread_post(thread_id, post_id):
         return redirect(url_for('user_activity.thread', thread_id=thread_id))
     elif request.method == "GET":
         form.reply.data = Markup(quote)
-    return render_template('thread_reply.html', title="Rozwiń wątek",
+    return render_template('thread_reply.html', title="Rozwiń wątek | Tom Waits",
                            legend="Odpowiedz użytkownikowi " + post.author.username, form=form,
                            image_file=check_image(),
                            thread_id=thread_id, reply_id=None)
@@ -153,7 +153,7 @@ def update_thread_post(post_id, thread_id):
         return redirect(url_for('user_activity.thread', thread_id=thread_id))
     elif request.method == "GET":
         form.reply.data = post.reply
-    return render_template('thread_reply.html', title="Edytuj odpowiedź",
+    return render_template('thread_reply.html', title="Edytuj odpowiedź | Tom Waits",
                            legend="Edytuj odpowiedź", form=form,
                            image_file=check_image(), thread_id=thread_id)
 
@@ -184,7 +184,7 @@ def track(track_id):
     for comment in comments:
         replies.append(Markup(comment.reply))
 
-    return render_template('track.html', title=track.title, image_file=check_image(), track=track, tags=tags,
+    return render_template('track.html', title=track.title+" | Tom Waits", image_file=check_image(), track=track, tags=tags,
                            tags_description=tags_description, comments=comments, replies=replies)
 
 
@@ -193,7 +193,7 @@ def track(track_id):
 def tracks():
     strona = request.args.get('strona', 1, type=int)
     tracks = Track.query.order_by(desc(Track.date_last_update)).paginate(page=strona, per_page=5)
-    return render_template('tracks.html', title="Utwory", image_file=check_image(), tracks=tracks)
+    return render_template('tracks.html', title="Utwory | Tom Waits", image_file=check_image(), tracks=tracks)
 
 
 @user_activity.route('/tracks/new', methods=['GET', 'POST'])
@@ -209,7 +209,7 @@ def new_track():
         tags = tags.replace("</p>", "<br/>")
         tags = tags.replace("&oacute;", "ó")
         tags = tags.replace("&Oacute;", "Ó")
-        track = Track(title=form.title.data, lyrics=tags, lyrics_with_scraps=tags, author=current_user,
+        track = Track(title=form.title.data+" | Tom Waits", lyrics=tags, lyrics_with_scraps=tags, author=current_user,
                       date_release=form.date_release.data, lyrics_by=form.lyrics_by.data,
                       description=form.description.data)
 
@@ -224,7 +224,7 @@ def new_track():
         flash("Utwór został dodany", "success")
         return redirect(url_for('user_activity.tracks'))
 
-    return render_template('create_track.html', title="Nowy Utwór", albums=albums,
+    return render_template('create_track.html', title="Nowy Utwór | Tom Waits", albums=albums,
                            legend="Dodaj nowy utwór", form=form, image_file=check_image())
 
 
@@ -268,7 +268,7 @@ def update_track(track_id):
         form.description.data = track.description
         form.date_release.data = track.date_release
         form.lyrics_by.data = track.lyrics_by
-    return render_template('create_track.html', title="Edytuj utwór", track_id=track_id,
+    return render_template('create_track.html', title="Edytuj utwór | Tom Waits", track_id=track_id,
                            legend="Edytuj utwór", form=form, image_file=check_image(), albums=albums,
                            track_albums=track.albums)
 
@@ -311,7 +311,7 @@ def track_reply(track_id):
         db.session.commit()
         flash("Odpowiedź została dodana", "success")
         return redirect(url_for('user_activity.track', track_id=track_id))
-    return render_template('track_reply.html', title="Dodaj Opinię",
+    return render_template('track_reply.html', title="Dodaj Opinię | Tom Waits",
                            legend="Odpowiedz", form=form, image_file=check_image(),
                            track_id=track_id, reply_id=None)
 
@@ -337,7 +337,7 @@ def quote_track_post(track_id, post_id):
         return redirect(url_for('user_activity.track', track_id=track_id))
     elif request.method == "GET":
         form.reply.data = Markup(quote)
-    return render_template('track_reply.html', title="Rozwiń wątek",
+    return render_template('track_reply.html', title="Rozwiń wątek | Tom Waits",
                            legend="Odpowiedz użytkownikowi " + post.author.username, form=form,
                            image_file=check_image(),
                            track_id=track_id, reply_id=None)
@@ -359,7 +359,7 @@ def update_track_post(post_id, track_id):
         return redirect(url_for('user_activity.track', track_id=track.id))
     elif request.method == "GET":
         form.reply.data = post.reply
-    return render_template('track_reply.html', title="Edytuj odpowiedź",
+    return render_template('track_reply.html', title="Edytuj odpowiedź | Tom Waits",
                            legend="Edytuj odpowiedź", form=form,
                            image_file=check_image(), track_id=track.id)
 
@@ -441,7 +441,7 @@ def scraps(track_id):
             flash("Fragment został oznaczony", "success")
             return redirect(url_for('user_activity.scraps', track_id=track_id))
 
-    return render_template('scraps.html', title=track.title, image_file=check_image(), track=track, tags=tags,
+    return render_template('scraps.html', title=track.title+" | Tom Waits", image_file=check_image(), track=track, tags=tags,
                            last_id=last_id,
                            scrap_rates_up=scrap_rates_up, scrap_rates_down=scrap_rates_down, form=form,
                            scrap_descriptions=scrap_descriptions,
@@ -464,7 +464,7 @@ def update_scrap(scrap_id):
         return redirect(url_for('user_activity.scraps', track_id=scrap.track_id))
     elif request.method == "GET":
         form.reply.data = scrap.description
-    return render_template('opinion_reply.html', title="Edytuj fragment",
+    return render_template('opinion_reply.html', title="Edytuj fragment | Tom Waits",
                            legend="Edytuj fragment", form=form,
                            image_file=check_image(), scrap_id=scrap.id, track_id=scrap.track_id)
 
@@ -507,7 +507,7 @@ def interpretations(track_id):
         rates_up[interpretation.id] = [pluses]
         rates_down[interpretation.id] = [minuses]
 
-    return render_template('interpretations.html', title=track.title, image_file=check_image(),
+    return render_template('interpretations.html', title=track.title+" | Tom Waits", image_file=check_image(),
                            track=track, tags=tags, interpretations=interpretations, rates_up=rates_up,
                            rates_down=rates_down)
 
@@ -536,7 +536,7 @@ def interpretation(track_id, interpretation_id):
         rate_author = "else"
     rates_up = [pluses, rate_author]
     rates_down = [minuses, rate_author]
-    return render_template('interpretation.html', title=track.title, image_file=check_image(), opinions=opinions,
+    return render_template('interpretation.html', title=track.title+" | Tom Waits", image_file=check_image(), opinions=opinions,
                            track=track, tags=tags, interpretation=interpretation,
                            interpretation_text=interpretation_text, rates_up=rates_up, rates_down=rates_down)
 
@@ -546,13 +546,13 @@ def interpretation(track_id, interpretation_id):
 def new_interpretation(track_id):
     form = InterpretationForm()
     if form.validate_on_submit():
-        interpretation = Interpretation(title=form.title.data, text=form.text.data, author=current_user,
+        interpretation = Interpretation(title=form.title.data+" | Tom Waits", text=form.text.data, author=current_user,
                                         track_id=track_id)
         db.session.add(interpretation)
         db.session.commit()
         flash("Interpretacja została dodana", "success")
         return redirect(url_for('user_activity.interpretations', track_id=track_id))
-    return render_template('create_interpretation.html', title="Dodaj interpretacje",
+    return render_template('create_interpretation.html', title="Dodaj interpretacje | Tom Waits",
                            legend="Zaproponuj swoją interpretację", form=form, image_file=check_image())
 
 
@@ -598,7 +598,7 @@ def update_interpretation(track_id, interpretation_id):
     elif request.method == "GET":
         form.title.data = interpretation.title
         form.text.data = interpretation.text
-    return render_template('create_interpretation.html', title="Edytuj interpretację",
+    return render_template('create_interpretation.html', title="Edytuj interpretację | Tom Waits",
                            legend="Edytuj interpretację", form=form,
                            image_file=check_image(), track_id=track_id, interpretation_id=interpretation_id)
 
@@ -614,7 +614,7 @@ def interpretation_reply(track_id, interpretation_id):
         db.session.commit()
         flash("Opinia została dodana", "success")
         return redirect(url_for('user_activity.interpretation', track_id=track_id, interpretation_id=interpretation_id))
-    return render_template('opinion_reply.html', title="Wyraź swoją opinię",
+    return render_template('opinion_reply.html', title="Wyraź swoją opinię | Tom Waits",
                            legend="Opinia", form=form, image_file=check_image(),
                            track_id=track_id, interpretation_id=interpretation_id, reply_id=None)
 
@@ -643,7 +643,7 @@ def quote_interpretation_reply(track_id, interpretation_opinion_id, interpretati
         return redirect(url_for('user_activity.interpretation', track_id=track_id, interpretation_id=interpretation_id))
     elif request.method == "GET":
         form.reply.data = Markup(quote)
-    return render_template('opinion_reply.html', title="Wyraź swoją opinię",
+    return render_template('opinion_reply.html', title="Wyraź swoją opinię | Tom Waits",
                            legend="Odpowiedz użytkownikowi " + interpretation_opinion.author.username, form=form,
                            image_file=check_image(), interpretation_opinion_id=interpretation_opinion_id,
                            track_id=track_id, interpretation_id=interpretation_id, reply_id=None)
@@ -666,7 +666,7 @@ def update_interpretation_opinion(track_id, interpretation_id, interpretation_op
         return redirect(url_for('user_activity.interpretation', track_id=track_id, interpretation_id=interpretation_id))
     elif request.method == "GET":
         form.reply.data = interpretation_opinion.text
-    return render_template('opinion_reply.html', title="Edytuj opinię",
+    return render_template('opinion_reply.html', title="Edytuj opinię | Tom Waits",
                            legend="Edytuj opinię", form=form, interpretation_opinion_id=interpretation_opinion_id,
                            image_file=check_image(), track_id=track_id, interpretation_id=interpretation_id)
 
@@ -690,7 +690,7 @@ def update_scrap_opinion(scrap_opinion_id):
         return redirect(url_for('user_activity.scraps', track_id=scrap_opinion.scrap.track_id))
     elif request.method == "GET":
         form.reply.data = scrap_opinion.text
-    return render_template('opinion_reply.html', title="Edytuj opinię",
+    return render_template('opinion_reply.html', title="Edytuj opinię | Tom Waits",
                            legend="Edytuj opinię", form=form, track_id=scrap_opinion.scrap.track_id,
                            scrap_opinion_id=scrap_opinion_id, image_file=check_image())
 
@@ -741,7 +741,7 @@ def translations(track_id):
         filter_by(track=track). \
         order_by(asc(Translation.date_posted))
 
-    return render_template('translations.html', title=track.title, image_file=check_image(),
+    return render_template('translations.html', title=track.title+" | Tom Waits", image_file=check_image(),
                            track=track, tags=tags, translations=translations, rates_down=rates_down, rates_up=rates_up)
 
 
@@ -770,7 +770,7 @@ def translation(track_id, translation_id):
         rate_author = "else"
     rates_up = [pluses, rate_author]
     rates_down = [minuses, rate_author]
-    return render_template('translation.html', title=track.title, image_file=check_image(), opinions=opinions,
+    return render_template('translation.html', title=track.title+" | Tom Waits", image_file=check_image(), opinions=opinions,
                            track=track, tags=tags, rates_up=rates_up, rates_down=rates_down, translation=translation,
                            translation_text=translation_text)
 
@@ -780,13 +780,13 @@ def translation(track_id, translation_id):
 def new_translation(track_id):
     form = TranslationForm()
     if form.validate_on_submit():
-        translation = Translation(title=form.title.data, lyrics_trans=form.text.data, author=current_user,
+        translation = Translation(title=form.title.data+" | Tom Waits", lyrics_trans=form.text.data, author=current_user,
                                   track_id=track_id)
         db.session.add(translation)
         db.session.commit()
         flash("Tłumaczenie zostało dodana", "success")
         return redirect(url_for('user_activity.translations', track_id=track_id))
-    return render_template('create_translation.html', title="Dodaj tłumaczenie",
+    return render_template('create_translation.html', title="Dodaj tłumaczenie | Tom Waits",
                            legend="Zaproponuj swoje tłumaczenie", form=form, image_file=check_image())
 
 
@@ -832,7 +832,7 @@ def update_translation(track_id, translation_id):
     elif request.method == "GET":
         form.title.data = translation.title
         form.text.data = translation.lyrics_trans
-    return render_template('create_translation.html', title="Edytuj interpretację",
+    return render_template('create_translation.html', title="Edytuj interpretację | Tom Waits",
                            legend="Edytuj interpretację", form=form,
                            image_file=check_image(), track_id=track_id, translation_id=translation_id)
 
@@ -847,7 +847,7 @@ def translation_reply(track_id, translation_id):
         db.session.commit()
         flash("Opinia została dodana", "success")
         return redirect(url_for('user_activity.translation', track_id=track_id, translation_id=translation_id))
-    return render_template('opinion_reply.html', title="Wyraź swoją opinię",
+    return render_template('opinion_reply.html', title="Wyraź swoją opinię | Tom Waits",
                            legend="Opinia", form=form, image_file=check_image(),
                            track_id=track_id, translation_id=translation_id, reply_id=None)
 
@@ -874,7 +874,7 @@ def quote_translation_reply(track_id, translation_opinion_id, translation_id):
         return redirect(url_for('user_activity.translation', track_id=track_id, translation_id=translation_id))
     elif request.method == "GET":
         form.reply.data = Markup(quote)
-    return render_template('opinion_reply.html', title="Wyraź swoją opinię",
+    return render_template('opinion_reply.html', title="Wyraź swoją opinię | Tom Waits",
                            legend="Odpowiedz użytkownikowi " + translation_opinion.author.username, form=form,
                            image_file=check_image(), translation_opinion_id=translation_opinion_id,
                            track_id=track_id, translation_id=translation_id, reply_id=None)
@@ -897,7 +897,7 @@ def update_translation_opinion(track_id, translation_id, translation_opinion_id)
         return redirect(url_for('user_activity.translation', track_id=track_id, translation_id=translation_id))
     elif request.method == "GET":
         form.reply.data = translation_opinion.text
-    return render_template('opinion_reply.html', title="Edytuj opinię",
+    return render_template('opinion_reply.html', title="Edytuj opinię | Tom Waits",
                            legend="Edytuj opinię", form=form, translation_opinion_id=translation_opinion_id,
                            image_file=check_image(), track_id=track_id, translation_id=translation_id)
 
@@ -1081,6 +1081,6 @@ def user_actions(username):
         filter_by(author=user). \
         order_by(desc(Interpretation.date_posted)).all()
 
-    return render_template('user_activity.html', title="Aktywność użytkownika", image_file=check_image(),
+    return render_template('user_activity.html', title="Aktywność | Tom Waits", image_file=check_image(),
                            activity=activity, user=user)
 

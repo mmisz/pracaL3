@@ -44,7 +44,7 @@ body {
 #carouselExampleCaptions {
     width: 100%;
     margin: 0 auto;
-    background-color: #2e383c;
+    background-color: #343a40!important;
 }
 
 .w-100 {

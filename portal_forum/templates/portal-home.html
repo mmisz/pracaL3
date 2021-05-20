@@ -1,8 +1,5 @@
 {% extends "portal-layout.html" %}
 {% block content %}
-    <h3>
-        Strona główna
-    </h3>
     <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
             <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
@@ -102,7 +99,7 @@ K. Varga, <i>Polska mistrzem Polski</i>, Warszawa 2012, s.53
             <div class="card bg-primary text-white text-center tile">
                 <a href="{{ url_for("main.about") }}">
                     <button class="btn-primary-dark tile-btn">
-                        <p style="margin-bottom: 0">Sprawdź co oferuje nasz Portal -</p>
+                        <p style="margin-bottom: 0">Sprawdź co oferuje nasz Portal,</p>
                         <p>dowiedz się jak korzystać z Forum</p>
                         <p style="margin-bottom: 0"><b>O stronie</b></p>
                     </button>
@@ -120,20 +117,20 @@ K. Varga, <i>Polska mistrzem Polski</i>, Warszawa 2012, s.53
         </div>
         <div class="tiles-row">
             <div class="card bg-primary text-white text-center tile">
-                <a href="{{ url_for("main.movies") }}">
+                <a href="{{ url_for("main.books") }}">
                     <button class="btn-primary-dark tile-btn">
-                        <p style="margin-bottom: 0">Twórczość Toma Waitsa -</p>
-                        <p>lista filmów, w których brał udział</p>
-                        <p style="margin-bottom: 0"><b>Filmografia</b></p>
+                        <p style="margin-bottom: 0">Skąd czerpać informacje?</p>
+                        <p>Lista książek o Tomie Waitsie</p>
+                        <p style="margin-bottom: 0"><b>Biografie</b></p>
                     </button>
                 </a>
             </div>
             <div class="card bg-primary text-white text-center tile">
-                <a href="{{ url_for("main.books") }}">
+                <a href="{{ url_for("main.movies") }}">
                     <button class="bg-dark text-white tile-btn">
-                        <p style="margin-bottom: 0">Skąd czerpać informacje?</p>
-                        <p>Lista książek o Tomie Waitsie</p>
-                        <p style="margin-bottom: 0"><b>Biografie</b></p>
+                        <p style="margin-bottom: 0">Twórczość Toma Waitsa -</p>
+                        <p>lista filmów, w których brał udział</p>
+                        <p style="margin-bottom: 0"><b>Filmografia</b></p>
                     </button>
                 </a>
             </div>
