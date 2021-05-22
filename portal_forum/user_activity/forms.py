@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, widgets, SelectMultipleField, HiddenField
-from wtforms.validators import DataRequired, ValidationError
+from wtforms.validators import DataRequired, ValidationError, NumberRange
 from wtforms.fields import html5 as h5fields
 from wtforms.widgets import html5 as h5widgets
 from portal_forum.models import Album
@@ -17,7 +17,7 @@ class CommentForm(FlaskForm):
 
 class TrackForm(FlaskForm):
     title = StringField('Tytuł', validators=[DataRequired()])
-    date_release = h5fields.IntegerField("Rok wydania", widget=h5widgets.NumberInput())
+    date_release = h5fields.IntegerField("Rok wydania", widget=h5widgets.NumberInput(), validators=[NumberRange(min=1970, max=2021, message="Wporwadź poprawny rok")])
     lyrics = TextAreaField('Tekst', validators=[DataRequired()])
     description = TextAreaField('Opis utworu')
     lyrics_by = StringField('Autor tekstu')

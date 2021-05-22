@@ -1,11 +1,12 @@
+import sys
+
 from flask import url_for, redirect, flash, request
 
 from portal_forum import db
 from functools import wraps
 from flask_login import current_user
 
-from portal_forum.models import To_Delete
-from portal_forum.models import TrackAlbums
+from portal_forum.models import To_Delete, TrackAlbums
 
 def login_my_required(f):
     @wraps(f)
@@ -42,9 +43,12 @@ def clear_track(track):
         db.session.delete(translation)
     for comment in track.comments:
         db.session.delete(comment)
-    track_albums = TrackAlbums.query.filter_by(track_id=track.id).all()
-    for track_album in track_albums:
-        db.session.delete(track_album)
+
+    track.albums = []
+
+
+    '''for track_album in track_albums:
+        db.session.delete(track_album)'''
     db.session.commit()
 
 def to_admin_delete(target_type, target_id):

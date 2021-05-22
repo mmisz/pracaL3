@@ -106,7 +106,7 @@ def admin_panel():
             element["author"] = translation.author.username
         to_deletes.append(element)
 
-    return render_template('admin_panel.html', image_file=check_image(), title="Panel administracyjny | Tom Waits",
+    return render_template('admin_panel.html', image_file=check_image(), title="Panel administracyjny",
                            albums=albums, to_deletes=to_deletes)
 
 def save_image(image):
@@ -136,7 +136,7 @@ def create_album():
         db.session.commit()
         flash('Album dodano pomyślnie!', 'success')
         return redirect(url_for('main.admin_panel'))
-    return render_template('create_album.html', title="Dodaj album | Tom Waits",
+    return render_template('create_album.html', title="Dodaj album",
                            form=form, image_file=check_image(), image_album=image_file)
 
 
@@ -163,7 +163,7 @@ def update_album(album_id):
         form.description.data = album.description
         form.date_release.data = album.date_release
         image_file = album.image_file
-    return render_template('create_album.html', title="Edytuj album | Tom Waits",
+    return render_template('create_album.html', title="Edytuj album",
                            form=form, image_file=check_image(), image_album=image_file)
 
 
@@ -324,7 +324,7 @@ def track(track_id):
     this_image_file = track.albums[0].image_file
     if is_published(track):
         tags = Markup(track.lyrics)
-        return render_template('portal-track.html', title=track.title+" | Tom Waits", track=track, tags=tags, this_image_file=this_image_file)
+        return render_template('portal-track.html', title=track.title, track=track, tags=tags, this_image_file=this_image_file)
     else:
         return redirect(url_for("main.home"))
 
@@ -342,7 +342,7 @@ def scraps(track_id):
         scraps_published.append({'id': id, 'is_published': scrap.published})
     scrap_descriptions = json.dumps(scrap_descriptions)
     scraps_published = json.dumps(scraps_published)
-    return render_template('portal-scraps.html', title=track.title+" | Tom Waits", image_file=check_image(),
+    return render_template('portal-scraps.html', title=track.title, image_file=check_image(),
                            scraps_published=scraps_published, track=track, tags=tags,
                            scrap_descriptions=scrap_descriptions)
 
@@ -355,7 +355,7 @@ def interpretations(track_id):
         filter_by(track_id=track.id, published=1). \
         order_by(asc(Interpretation.date_posted))
 
-    return render_template('portal-interpretations.html', title=track.title+" | Tom Waits", image_file=check_image(),
+    return render_template('portal-interpretations.html', title=track.title, image_file=check_image(),
                            track=track, tags=tags, interpretations=interpretations)
 
 
@@ -366,7 +366,7 @@ def interpretation(track_id, interpretation_id):
     if is_published(interpretation):
         tags = Markup(track.lyrics)
         interpretation_text = Markup(interpretation.text)
-        return render_template('portal-interpretation.html', title=track.title+" | Tom Waits",
+        return render_template('portal-interpretation.html', title=track.title,
                                track=track, tags=tags, interpretation=interpretation,
                                interpretation_text=interpretation_text)
     else:
@@ -381,7 +381,7 @@ def translations(track_id):
         filter_by(track_id=track.id, published=1). \
         order_by(asc(Translation.date_posted))
 
-    return render_template('portal-translations.html', title=track.title+" | Tom Waits", image_file=check_image(),
+    return render_template('portal-translations.html', title=track.title, image_file=check_image(),
                            track=track, tags=tags, translations=translations)
 
 
@@ -392,7 +392,7 @@ def translation(track_id, translation_id):
     if is_published(translation):
         tags = Markup(track.lyrics)
         translation_text = Markup(translation.lyrics_trans)
-        return render_template('portal-translation.html', title=track.title+" | Tom Waits",
+        return render_template('portal-translation.html', title=track.title,
                                track=track, tags=tags, translation=translation,
                                translation_text=translation_text)
     else:

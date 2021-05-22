@@ -209,7 +209,7 @@ def new_track():
         tags = tags.replace("</p>", "<br/>")
         tags = tags.replace("&oacute;", "ó")
         tags = tags.replace("&Oacute;", "Ó")
-        track = Track(title=form.title.data+" | Tom Waits", lyrics=tags, lyrics_with_scraps=tags, author=current_user,
+        track = Track(title=form.title.data, lyrics=tags, lyrics_with_scraps=tags, author=current_user,
                       date_release=form.date_release.data, lyrics_by=form.lyrics_by.data,
                       description=form.description.data)
 
@@ -283,8 +283,9 @@ def delete_track(track_id):
     int_len = len(track.interpretations)
     posts_len = len(track.comments)
     trans_len = len(track.translations)
+    albums = len(track.albums)
     any_length = bool()
-    if scr_len > 0 or int_len > 0 or posts_len > 0 or trans_len > 0:
+    if scr_len > 0 or int_len > 0 or posts_len > 0 or trans_len > 0 or albums > 0:
         any_length = True
 
     if not current_user.is_admin and any_length:
