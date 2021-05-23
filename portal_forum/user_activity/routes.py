@@ -549,7 +549,7 @@ def interpretation(track_id, interpretation_id):
 def new_interpretation(track_id):
     form = InterpretationForm()
     if form.validate_on_submit():
-        interpretation = Interpretation(title=form.title.data+" | Tom Waits", text=form.text.data, author=current_user,
+        interpretation = Interpretation(title=form.title.data, text=form.text.data, author=current_user,
                                         track_id=track_id)
         db.session.add(interpretation)
         db.session.commit()
@@ -798,7 +798,7 @@ def translation(track_id, translation_id):
 def new_translation(track_id):
     form = TranslationForm()
     if form.validate_on_submit():
-        translation = Translation(title=form.title.data+" | Tom Waits", lyrics_trans=form.text.data, author=current_user,
+        translation = Translation(title=form.title.data, lyrics_trans=form.text.data, author=current_user,
                                   track_id=track_id)
         db.session.add(translation)
         db.session.commit()
