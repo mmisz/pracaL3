@@ -9,7 +9,7 @@ from portal_forum.user_activity.forms import ThreadForm, PostForm, TrackForm, Sc
 from portal_forum import db
 from portal_forum.models import Thread, User, Thread_Post, Track, Album, Scrap, Track_Post, Interpretation, \
     Interpretation_Opinion, Translation_Opinion, Translation, Scrap_Rating, Translation_Rating, Interpretation_Rating, \
-    Scrap_Opinion, To_Delete
+    Scrap_Opinion, Scrap_last_id
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import datetime
 from portal_forum.users.utils import check_image
@@ -391,15 +391,15 @@ def scraps(track_id):
     scrap_authors = []
     opinions = []
     scrap_authors_raw = []
-    last_id = Scrap.query. \
-        order_by(desc(Scrap.id)).first()
+    past_id = Scrap_last_id.query. \
+        order_by(desc(Scrap_last_id.id)).first()
     '''print("_____________________________________________________-", file=sys.stderr)
     print(last_id, file=sys.stderr)
     print("_____________________________________________________", file=sys.stderr)'''
-    if last_id is not None:
-        last_id = json.dumps(last_id.id)
+    if past_id is not None:
+        past_id = json.dumps(past_id.last_id)
     else:
-        last_id = json.dumps(0)
+        past_id = json.dumps(0)
     for scrap in track.scraps:
         id = scrap.id
 
@@ -439,13 +439,21 @@ def scraps(track_id):
             track.lyrics_with_scraps = lyrics_with_scraps
             new_scrap = Scrap(description=form.description.data, track_id=track_id,
                               author=current_user)
+
             db.session.add(new_scrap)
             db.session.commit()
+            last_id = Scrap.query. \
+                order_by(desc(Scrap.id)).first().id
+
+            last_scrap_id = Scrap_last_id(last_id=last_id)
+            db.session.add(last_scrap_id)
+            db.session.commit()
+
             flash("Fragment został oznaczony", "success")
             return redirect(url_for('user_activity.scraps', track_id=track_id))
 
     return render_template('scraps.html', title=track.title+" | Tom Waits", image_file=check_image(), track=track, tags=tags,
-                           last_id=last_id,
+                           last_id=past_id,
                            scrap_rates_up=scrap_rates_up, scrap_rates_down=scrap_rates_down, form=form,
                            scrap_descriptions=scrap_descriptions,
                            scrap_authors=scrap_authors, comment_form=comment_form, opinions=opinions,

@@ -122,6 +122,9 @@ class Track_Post(db.Model):
     def __repr__(self):
         return f"Track_Post('{self.id}', '{self.date_posted}')"
 
+class Scrap_last_id(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    last_id = db.Column(db.Integer, nullable=False, default=0)
 
 class Scrap(db.Model):
     id = db.Column(db.Integer, primary_key=True)
