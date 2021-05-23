@@ -682,6 +682,9 @@ a.article-title:hover {
         padding-right: 5%;
         padding-left: 5%;
     }
+    iframe{
+        width: 100%;
+    }
     .lyrics-text{
         padding-right: 5%;
         padding-left: 5%;

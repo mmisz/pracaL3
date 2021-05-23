@@ -243,8 +243,15 @@ def update_track(track_id):
         tags = tags.replace("</p>", "<br/>")
 
         track.title = form.title.data
-        track.lyrics = tags
-        track.lyrics_with_scraps = tags
+        if tags != track.lyrics:
+            track.lyrics = tags
+            track.lyrics_with_scraps = tags
+            for scrap in track.scraps:
+                for opinion in scrap.opinions:
+                    db.session.delete(opinion)
+                for rate in scrap.rates:
+                    db.session.delete(rate)
+                db.session.delete(scrap)
         track.description = form.description.data
         track.date_release = form.date_release.data
         track.lyrics_by = form.lyrics_by.data
@@ -253,12 +260,7 @@ def update_track(track_id):
             album = Album.query.filter_by(id=int(cd)).first_or_404()
 
             track.albums.append(album)
-        for scrap in track.scraps:
-            for opinion in scrap.opinions:
-                db.session.delete(opinion)
-            for rate in scrap.rates:
-                db.session.delete(rate)
-            db.session.delete(scrap)
+
         db.session.commit()
         flash("Utwór zaktualizowany!", 'success')
         return redirect(url_for('user_activity.track', track_id=track.id))
@@ -322,8 +324,8 @@ def track_reply(track_id):
 def quote_track_post(track_id, post_id):
     post = Track_Post.query.get_or_404(post_id)
     form = PostForm()
-    date_posted = str(datetime.strptime(str(post.date_posted), "%Y-%m-%d %H:%M:%S.%f"))
-    date_posted = date_posted.split(".")[0]
+    date_posted = post.date_posted
+    date_posted = date_posted.strftime('%Y-%m-%d %H:%M')
     quote = "<div>" \
             "<div style='background:#eeeeee;border:1px solid #cccccc;padding:5px 10px;'>" \
             "<b>" + post.author.username + "</b> powiedział " + date_posted + \
