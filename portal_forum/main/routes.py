@@ -117,7 +117,7 @@ def save_image(image):
     image.save(image_path)
     return image_name
 
-@main.route('/album//create', methods=['GET', 'POST'])
+@main.route('/album/create', methods=['GET', 'POST'])
 @login_required
 def create_album():
     image_file = "album_covers/default.jpg"

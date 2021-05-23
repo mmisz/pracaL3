@@ -29,7 +29,7 @@
                 {{ tags }}
             </div>
             <div class="card border-dark mb-3 lyrics-description">
-            <img width="100%"  src="{{ url_for('static', filename='album_covers/' + this_image_file) }}">
+                    <img width="100%" src="{{ url_for('static', filename='album_covers/' + this_image_file) }}">
                 <div class="card-header">Informacje o utworze</div>
                 <div class="card-body text-dark pb-0 pt-0">
                     <p class="card-text">
@@ -39,7 +39,10 @@
                     <p>Utwór znalazł się na albumach:
                     <ul>
                         {% for album in track.albums %}
-                            <li>{{ album.title }} ({{ album.date_release }})</li>
+                            <li>
+                                <a href="{{ url_for("main.album", album_id=album.id) }}">{{ album.title }} </a>
+                                ({{ album.date_release }})
+                            </li>
                         {% endfor %}
                     </ul>
                     </p>
