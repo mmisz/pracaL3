@@ -678,6 +678,18 @@ a.article-title:hover {
 }
 
 @media only screen and (max-width: 768px) {
+    .article-title{
+        padding-right: 5%;
+        padding-left: 5%;
+    }
+    .lyrics-text{
+        padding-right: 5%;
+        padding-left: 5%;
+    }
+    #content {
+        padding: 0;
+    }
+
     .young-img {
         width: 100% !important;
     }

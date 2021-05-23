@@ -23,12 +23,9 @@
                 <thead class="thead-primary">
                 <tr>
                     <th scope="col">Dodano</th>
-                    <th scope="col">Użytkownik</th>
+                    <th scope="col">Przez</th>
                     <th scope="col">Tytuł</th>
-                    <th scope="col">Albumy</th>
-
-                    <th scope="col" class="hide-mobile">Odpowiedzi</th>
-                    <th scope="col" class="hide-mobile">Odsłony</th>
+                    <th scope="col" class="hide-mobile">Albumy</th>
                     <th scope="col" class="hide-mobile">Ostatnia aktualizacja</th>
                 </tr>
                 </thead>
@@ -46,7 +43,7 @@
                                 {{ track.title }}
                             </a>
                         </td>
-                        <td>
+                        <td class="hide-mobile">
                             {% for album in track.albums %}
                                 {% if loop.index < track.albums|length %}
                                     {{ album.title }},
@@ -55,8 +52,6 @@
                                 {% endif %}
                             {% endfor %}
                         </td>
-                        <td class="hide-mobile">odpowiedzi</td>
-                        <td class="hide-mobile">odsłony</td>
                         <td class="hide-mobile">{{ track.date_last_update.strftime('%Y-%m-%d %H:%M') }}</td>
 
                     </tr>

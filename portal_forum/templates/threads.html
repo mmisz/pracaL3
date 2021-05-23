@@ -26,7 +26,6 @@
                     <th scope="col">Autor</th>
                     <th scope="col">Temat</th>
                     <th scope="col" class="hide-mobile">Odpowiedzi</th>
-                    <th scope="col" class="hide-mobile">Odsłony</th>
                     <th scope="col" class="hide-mobile">Ostatnia aktualizacja</th>
                 </tr>
                 </thead>
@@ -44,8 +43,7 @@
                                 {{ thread.topic }}
                             </a>
                         </td>
-                        <td class="hide-mobile">odpowiedzi</td>
-                        <td class="hide-mobile">odsłony</td>
+                        <td class="hide-mobile">{{ thread.threads|length }}</td>
                         <td class="hide-mobile">{{ thread.date_last_update.strftime('%Y-%m-%d %H:%M') }}</td>
 
                     </tr>
