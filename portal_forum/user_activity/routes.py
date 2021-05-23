@@ -671,6 +671,21 @@ def update_interpretation_opinion(track_id, interpretation_id, interpretation_op
                            legend="Edytuj opinię", form=form, interpretation_opinion_id=interpretation_opinion_id,
                            image_file=check_image(), track_id=track_id, interpretation_id=interpretation_id)
 
+@user_activity.route('/track/<int:track_id>/scrap/comment', methods=['POST'])
+@login_my_required
+def add_scrap_comment(track_id):
+    if request.method == 'POST':
+        form = request.form
+        scrap_id = form['scrap_to_comment']
+        scrap = Scrap.query.get_or_404(scrap_id)
+        track = Track.query.get_or_404(track_id)
+        if scrap not in track.scraps:
+            abort(403)
+        add_scrap_comment = Scrap_Opinion(text=form['reply'], scrap_id=scrap_id, author=current_user)
+        db.session.add(add_scrap_comment)
+        flash("Komentarz został dodany", 'success')
+        db.session.commit()
+        return redirect(url_for('user_activity.scraps', track_id=track_id))
 
 @user_activity.route(
     '/scrap_opinion/<int:scrap_opinion_id>/update', methods=['GET', 'POST'])
@@ -679,19 +694,19 @@ def update_scrap_opinion(scrap_opinion_id):
     scrap_opinion = Scrap_Opinion.query.get_or_404(scrap_opinion_id)
     if scrap_opinion.author != current_user:
         abort(403)
-    form = OpinionForm()
+    form = CommentForm()
     if form.validate_on_submit():
         tags = form.reply.data
-        tags = tags.replace("<p>", '')
-        tags = tags.replace("</p>", '')
+        #tags = tags.replace("<p>", '')
+        #tags = tags.replace("</p>", '')
         scrap_opinion.text = tags
-        interpretation.date_last_update = datetime.strptime(str(datetime.utcnow()), "%Y-%m-%d %H:%M:%S.%f")
+        #interpretation.date_last_update = datetime.strptime(str(datetime.utcnow()), "%Y-%m-%d %H:%M:%S.%f")
         db.session.commit()
         flash("Opinia została zaktualizowana!", 'success')
         return redirect(url_for('user_activity.scraps', track_id=scrap_opinion.scrap.track_id))
     elif request.method == "GET":
         form.reply.data = scrap_opinion.text
-    return render_template('opinion_reply.html', title="Edytuj opinię | Tom Waits",
+    return render_template('scrap_opinion_reply.html', title="Edytuj opinię | Tom Waits",
                            legend="Edytuj opinię", form=form, track_id=scrap_opinion.scrap.track_id,
                            scrap_opinion_id=scrap_opinion_id, image_file=check_image())
 
@@ -917,21 +932,7 @@ def delete_translation_opinion(track_id, translation_id, translation_opinion_id)
     return redirect(url_for('user_activity.translation', translation_id=translation_id, track_id=track_id))
 
 
-@user_activity.route('/track/<int:track_id>/scrap/comment', methods=['POST'])
-@login_my_required
-def add_scrap_comment(track_id):
-    if request.method == 'POST':
-        form = request.form
-        scrap_id = form['scrap_to_comment']
-        scrap = Scrap.query.get_or_404(scrap_id)
-        track = Track.query.get_or_404(track_id)
-        if scrap not in track.scraps:
-            abort(403)
-        add_scrap_comment = Scrap_Opinion(text=form['reply'], scrap_id=scrap_id, author=current_user)
-        db.session.add(add_scrap_comment)
-        flash("Komentarz został dodany", 'success')
-        db.session.commit()
-        return redirect(url_for('user_activity.scraps', track_id=track_id))
+
 
 
 @user_activity.route('/track/<int:track_id>/scrap/rate', methods=['POST'])

@@ -1,0 +1,23 @@
+{% extends "forum-layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <form method="POST" id="add-scrap-opinion">
+                            {{ form.hidden_tag() }}
+
+            <fieldset class="mb-2">
+                <div>
+                    <input class="full" id="reply" name="reply" required="" type="text" value="">
+                </div>
+            </fieldset>
+            <div class="form-group">
+                <button id="btn-save" type="submit" class="btn bg-dark text-white responsive-full">
+                    Zapisz
+                </button>
+                <a href="{{ url_for('user_activity.scraps', track_id=track_id) }}"
+                       class="btn bg-dark text-white responsive-full">
+                        Powrót
+                    </a>
+            </div>
+        </form>
+    </div>
+{% endblock %}
