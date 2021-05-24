@@ -1,25 +1,25 @@
 {% extends "forum-layout.html" %}
 {% block content %}
-    {% for page_num in threads.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-        {% if page_num %}
-            {% if threads.page == page_num %}
-                <a class="btn btn-dark mt-2 mb-2"
-                   href="{{ url_for("user_activity.threads", strona=page_num) }}">{{ page_num }}</a>
-            {% else %}
-                <a class="btn btn-outline-dark mt-2 mb-2"
-                   href="{{ url_for("user_activity.threads", strona=page_num) }}">{{ page_num }}</a>
-            {% endif %}
-        {% else %}
-            ...
-        {% endif %}
-
-    {% endfor %}
     <div class="card">
         <div class="card-header">
             Wątki
         </div>
         <div class="card-body">
-            <table class="table">
+            {% for page_num in threads.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                {% if page_num %}
+                    {% if threads.page == page_num %}
+                        <a class="btn btn-dark"
+                           href="{{ url_for("user_activity.threads", strona=page_num) }}">{{ page_num }}</a>
+                    {% else %}
+                        <a class="btn btn-outline-dark"
+                           href="{{ url_for("user_activity.threads", strona=page_num) }}">{{ page_num }}</a>
+                    {% endif %}
+                {% else %}
+                    ...
+                {% endif %}
+
+            {% endfor %}
+            <table class="table hide-mobile" style="margin-bottom: 5px; margin-top: 5px">
                 <thead class="thead-primary">
                 <tr>
                     <th scope="col">Data</th>
@@ -52,29 +52,50 @@
 
                 </tbody>
             </table>
-            <a href="{{ url_for("user_activity.new_thread") }}" class="btn bg-dark text-white responsive-full mt-2">
-                <svg xmlns="url_for('static', filename='/images/plus-circle.svg/')" width="20" height="20"
-                     fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                </svg>
-                Rozpocznij nowy wątek
-            </a>
-            <a href="{{ url_for("main.forum") }}" class="btn bg-dark text-white responsive-full responsive-marg-6 mt-2">Powrót</a>
+            <div class="elements-table" style="margin-bottom: 5px; margin-top: 5px">
+                {% for thread in threads.items %}
+                    <div class="table-row">
+                        <div class="table-cell">
+                            Dodano: <div style="display: inline-block"> {{ thread.date_posted.strftime('%Y-%m-%d %H:%M') }}</div><br>
+                            Przez: <a class="mr-2 grey-link"
+                                      href="{{ url_for("user_activity.user_actions", username=thread.author.username) }}">{{ thread.author.username }}
+                        </a>
+                        </div>
+                        <div class="table-cell">
+                            Temat:
+                            <a href="{{ url_for('user_activity.thread', thread_id=thread.id) }}"
+                               class="grey-link">
+                                {{ thread.topic }}
+                            </a><br>
+                            Odpowiedzi: {{ thread.threads|length }}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            {% for page_num in threads.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                {% if page_num %}
+                    {% if threads.page == page_num %}
+                        <a class="btn btn-dark"
+                           href="{{ url_for("user_activity.threads", strona=page_num) }}">{{ page_num }}</a>
+                    {% else %}
+                        <a class="btn btn-outline-dark"
+                           href="{{ url_for("user_activity.threads", strona=page_num) }}">{{ page_num }}</a>
+                    {% endif %}
+                {% else %}
+                    ...
+                {% endif %}
+            {% endfor %}
         </div>
     </div>
-    {% for page_num in threads.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-        {% if page_num %}
-            {% if threads.page == page_num %}
-                <a class="btn btn-dark mt-2 mb-4"
-                   href="{{ url_for("user_activity.threads", strona=page_num) }}">{{ page_num }}</a>
-            {% else %}
-                <a class="btn btn-outline-dark mt-2 mb-4"
-                   href="{{ url_for("user_activity.threads", strona=page_num) }}">{{ page_num }}</a>
-            {% endif %}
-        {% else %}
-            ...
-        {% endif %}
 
-    {% endfor %}
+    <a href="{{ url_for("user_activity.new_thread") }}" class="btn bg-dark text-white responsive-full mb-2">
+        <svg xmlns="url_for('static', filename='/images/plus-circle.svg/')" width="20" height="20"
+             fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+        </svg>
+        Rozpocznij nowy wątek
+    </a>
+    <a href="{{ url_for("main.forum") }}"
+       class="btn bg-dark text-white responsive-full mb-2">Powrót</a>
 {% endblock content %}

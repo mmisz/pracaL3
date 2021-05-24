@@ -93,15 +93,15 @@
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for("users.login") }}">
-                            <button class="btn bg-light text-dark my-2 my-sm-0 responsive-full" type="submit">Zaloguj
+                        <a class="nav-link pading-tb-0" href="{{ url_for("users.login") }}">
+                            <button style="margin-top: 0;" class="btn bg-light text-dark my-2 my-sm-0 responsive-full" type="submit">Zaloguj
                                 się
                             </button>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for("users.register") }}">
-                            <button class="btn bg-light text-dark my-2 my-sm-0 responsive-full" type="submit">
+                        <a class="nav-link pading-tb-0" href="{{ url_for("users.register") }}">
+                            <button style="margin-top: 0;" class="btn bg-light text-dark my-2 my-sm-0 responsive-full" type="submit">
                                 Zarejestruj się
                             </button>
                         </a>
@@ -109,7 +109,8 @@
                 {% endif %}
                 <li class="nav-item active text-middle-height">
                     <a class="nav-link hv-back-grey responsive-full"
-                       href="{{ url_for("main.home") }}"><b>Portal</b><span class="sr-only">(current)</span></a>
+                       href="{{ url_for("main.home") }}"><b>Portal</b><span class="sr-only">(current)</span>
+                    </a>
                 </li>
             </ul>
         </div>

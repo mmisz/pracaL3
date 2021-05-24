@@ -24,21 +24,21 @@
                 </script>
             </fieldset>
             <div class="form-group">
-                <button type="submit" class="btn bg-dark text-white responsive-full">Zapisz</button>
+                <button type="submit" class="btn bg-dark text-white responsive-marg-6 mb-2 responsive-full">Zapisz</button>
 
                 {% if translation_id is defined %}
                     <a href="{{ url_for('user_activity.translation', translation_id=translation_id, track_id=track_id) }}"
-                       class="btn bg-dark text-white responsive-full">
+                       class="btn bg-dark text-white responsive-full mb-2">
                         Powrót
                     </a>
                 {% elif interpretation_id is defined %}
                     <a href="{{ url_for('user_activity.interpretation', interpretation_id=interpretation_id, track_id=track_id) }}"
-                       class="btn bg-dark text-white responsive-full">
+                       class="btn bg-dark text-white responsive-full mb-2">
                         Powrót
                     </a>
                 {% elif scrap_opinion_id is defined or scrap_id is defined %}
                     <a href="{{ url_for('user_activity.scraps', track_id=track_id) }}"
-                       class="btn bg-dark text-white responsive-full">
+                       class="btn bg-dark text-white responsive-full mb-2">
                         Powrót
                     </a>
                 {% endif %}
