@@ -1,11 +1,14 @@
 {% extends "forum-layout.html" %}
 {% block content %}
     <div id="colage">
-        <img class="forum_img" src="{{ url_for('static', filename="images/3619810051_02c3dbe30d_e.jpg") }}">
-        <img class="forum_img" src="{{ url_for('static', filename="images/3619810751_5a91292856_e.jpg") }}">
-        <img class="forum_img responsive-none"
+        <img class="forum_img instruction_img"
+             src="{{ url_for('static', filename="images/3619810051_02c3dbe30d_e.jpg") }}">
+        <img class="forum_img instruction_img"
+             src="{{ url_for('static', filename="images/3619810751_5a91292856_e.jpg") }}">
+        <br class="full-none">
+        <img class="forum_img instruction_img"
              src="{{ url_for('static', filename="images/3620628636_4519558c9d_e.jpg") }}">
-        <img class="forum_img responsive-none"
+        <img class="forum_img instruction_img"
              src="{{ url_for('static', filename="images/3620628766_a92f1584b4_e.jpg") }}">
     </div>
     <div class="card">
@@ -51,7 +54,9 @@
                 {% for thread in threads %}
                     <div class="table-row">
                         <div class="table-cell">
-                            Dodano: <div style="display: inline-block">{{ thread.date_posted.strftime('%Y-%m-%d %H:%M') }}</div><br>
+                            Dodano:
+                            <div style="display: inline-block">{{ thread.date_posted.strftime('%Y-%m-%d %H:%M') }}</div>
+                            <br>
                             Przez: <a class="mr-2 grey-link"
                                       href="{{ url_for("user_activity.user_actions", username=thread.author.username) }}">{{ thread.author.username }}
                         </a>
@@ -137,7 +142,9 @@
                     {% for track in tracks %}
                         <div class="table-row">
                             <div class="table-cell">
-                                Dodano: <div style="display: inline-block">{{ track.date_posted.strftime('%Y-%m-%d %H:%M') }}</div><br>
+                                Dodano:
+                                <div style="display: inline-block">{{ track.date_posted.strftime('%Y-%m-%d %H:%M') }}</div>
+                                <br>
                                 Przez: <a class="mr-2 grey-link"
                                           href="{{ url_for("user_activity.user_actions", username=track.author.username) }}">{{ track.author.username }}
                             </a>
@@ -180,5 +187,21 @@
             </div>
         {% endif %}
     </div>
-
+    <div class="image-view">
+        <img id="big-image" src="" alt="image_bigger_view">
+        <div class="image-view-description">
+            <h3>Autor - Anton Corbijn</h3>
+            <h4>Źródło - <a class="grey-link" href="http://www.tomwaits.com/">tomwaits.com</a></h4>
+        </div>
+    </div>
+    <script>
+        $(".instruction_img").click(function () {
+            var src = $(this).attr("src");
+            $(".image-view").show();
+            $("#big-image").attr("src", src);
+        });
+        $(".image-view").click(function () {
+            $(".image-view").hide();
+        });
+    </script>
 {% endblock content %}

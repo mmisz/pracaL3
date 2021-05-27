@@ -4,7 +4,7 @@
         Zrozumieć poezję – portal i forum fanów Toma Waitsa
     </h3>
     <div class="one-img">
-        <div class="left-side-image">
+        <div class="left-side-image responsive-full">
             <img src="http://farm3.static.flickr.com/2468/3752111967_caa66f81f0.jpg"
                  alt="Tom Waits by Michael O'Brien">
             <pre>Autor - Michael O'Brien, źródło - <a href="http://www.tomwaits.com/photos/">tomwaits.com</a></pre>
@@ -165,7 +165,7 @@ Say S. Jacobs, Dzikie Lata. Muzyka i mit Toma Waitsa (2006)
                             Zinterpretuj
                         </a>:
                         <br>
-                        <img class="instruction_img"
+                        <img class="instruction_img responsive-full"
                              src="{{ url_for('static', filename="images/interpretation_1.jpg") }}">
                     </li>
                     <li>
@@ -250,55 +250,59 @@ Say S. Jacobs, Dzikie Lata. Muzyka i mit Toma Waitsa (2006)
         <div id="filmography-toggle" class="card-header header-btn">
             Bibliografia
         </div>
-        <ul id="filmography-list">
+        <ol id="filmography-list">
             <li>Rabsztyn T., W Koloseum. O Tomie Waitsie, Gdańsk, Oficynka 2019</li>
-            <li>Jacobs J.S., Dzikie Lata. Muzyka i mit Toma Waitsa, przeł. J. Rybski, Wrocław, Wydawnictwo
-                Dolnośląskie 2006
+            <li>Jacobs J.S., Dzikie Lata. Muzyka i mit Toma Waitsa, przeł. J. Rybski, Wrocław, Wydawnictwo Dolnośląskie
+                2006
             </li>
-            <li>Staszewski K., Piosenki Toma Waitsa, teksty w tłumaczeniu Romana Kołakowskiego, VIP Production,
-                Luna Music 2003
-            </li>
-            <li>
-                Chaciński B., Mistrz świata zadupia, Polifonia, 8 maja 2013,
-                <pre>https://polifonia.blog.polityka.pl/2013/05/08/mistrz-swiata-zadupia/</pre>
-            </li>
-            <li>
-                Chaciński B., Tom Waits: Człowiek wrzask, , „Wyż Niż”, wiosna 2003,
-                <pre>https://chacinski.wordpress.com/wrzutnia/tom-waits-czlowiek-wrzask/</pre>
-            </li>
-            <li>
-                Sylvie Simmons, The Mojo Interview, "Mojo magazine", Październik 2004
-            </li>
-        </ul>
+            <li>Staszewski K., Piosenki Toma Waitsa, teksty w tłumaczeniu Romana Kołakowskiego, VIP Production, Luna
+                Music
+            <li>2003</li>
+            <li>Simmons S., The Mojo Interview, "Mojo magazine", Październik 2004</li>
+            <li>Varga K., Polska mistrzem Polski, Warszawa, Agora 2012</li>
+            <li>Rowland M., Tom Waits is Flying Upside Down (On Purpose), „Musician”, październik 1987</li>
+            <li>Tom Foolery – Swapping stories with inimitable Tom Waits, “Buzz Magazine”, Maj 1993</li>
+
+
+        </ol>
     </div>
     <div class="card" style="padding: 0; width: 100%">
         <a name="sources"></a>
         <div id="sources-toggle" class="card-header header-btn">
             Źródła
         </div>
-        <ul id="source-list">
-            <li>Favicon -
-            <pre>http://www.fernandogarciacalderon.com/facetas-de-tom-waits/</pre>
-            </li>
-            <li>Slider
-            </li>
-            <li>Staszewski K., Piosenki Toma Waitsa, teksty w tłumaczeniu Romana Kołakowskiego, VIP Production,
-                Luna Music 2003
+        <ol id="source-list">
+            <li>Favicon - fernandogarciacalderon.com
+                <pre>http://www.fernandogarciacalderon.com/facetas-de-tom-waits/</pre>
             </li>
             <li>
-                Chaciński B., Mistrz świata zadupia, Polifonia, 8 maja 2013,
-                <pre>
-https://polifonia.blog.polityka.pl/2013/05/08/mistrz-swiata-zadupia/
-                </pre>
-            </li>
-            <li>
-                Chaciński B., Tom Waits: Człowiek wrzask, , „Wyż Niż”, wiosna 2003,
-                <pre>
-https://chacinski.wordpress.com/wrzutnia/tom-waits-czlowiek-wrzask/
-            </pre>
-            </li>
+                Slider na stronie głównej portalu ze strony tomwaits.com – oficjalnej strony Toma Waitsa.
+                <br>
+                Autorzy fotografii:
+                <ul>
+                    <li>Kenny Mathieson,</li>
+                    <li>Danny Clinch,</li>
+                    <li>Jesse Dylan,</li>
+                    <li>Anton Corbijn.</li>
+                </ul>
 
-        </ul>
+            </li>
+            </li>
+            <li>
+                Plakaty filmowe:
+                <ul>
+                    <li>https://en.wikipedia.org/wiki/File:Paradise_alley.jpg</li>
+                    <li>https://en.wikipedia.org/wiki/File:One_from_the_Heart_poster.jpg</li>
+                    <li>https://en.wikipedia.org/wiki/File:Wolfen_1981.jpg</li>
+                    <li>https://en.wikipedia.org/wiki/File:Cotton_club.jpg</li>
+                    <li>https://en.wikipedia.org/wiki/File:Down_by_Law_(1986_film)_poster.jpg</li>
+                    <li>https://en.wikipedia.org/wiki/File:Shortcutsfilm.jpg</li>
+                </ul>
+            </li>
+            <li>Zdjęcia na stronie głównej forum autorstwa Antona Corbijna,
+                ze strony tomwaits.com – oficjalnej strony Toma Waitsa
+            </li>
+        </ol>
     </div>
     <div class="card" style="padding: 0; width: 100%">
         <a name="links"></a>
@@ -306,25 +310,29 @@ https://chacinski.wordpress.com/wrzutnia/tom-waits-czlowiek-wrzask/
             Linki zewnętrzne
         </div>
         <ul id="link-list">
-            <li>Rabsztyn T., W Koloseum. O Tomie Waitsie, Gdańsk, Oficynka 2019</li>
-            <li>Jacobs J.S., Dzikie Lata. Muzyka i mit Toma Waitsa, przeł. J. Rybski, Wrocław, Wydawnictwo
-                Dolnośląskie 2006
-            </li>
-            <li>Staszewski K., Piosenki Toma Waitsa, teksty w tłumaczeniu Romana Kołakowskiego, VIP Production,
-                Luna Music 2003
+            <li>
+                Oficjalna strona Toma Waitsa - <a href="http://www.tomwaits.com/">tomwaits.com</a>
             </li>
             <li>
-                Chaciński B., Mistrz świata zadupia, Polifonia, 8 maja 2013,
-                <pre>https://polifonia.blog.polityka.pl/2013/05/08/mistrz-swiata-zadupia/</pre>
+                Sekcja Toma Waitsa w serwisie Genius - <a href="https://genius.com/artists/Tom-waits">Genius.com</a>
             </li>
             <li>
-                Chaciński B., Tom Waits: Człowiek wrzask, , „Wyż Niż”, wiosna 2003,
-                <pre>
-https://chacinski.wordpress.com/wrzutnia/tom-waits-czlowiek-wrzask/
-            </pre>
+                Tom Waits Library - obszerne źródło wiedzy - <a href="http://tomwaitslibrary.info/home/">tomwaitslibrary.info</a>
             </li>
-
         </ul>
     </div>
+    <div class="image-view">
+        <img id="big-image" src="" alt="image_bigger_view">
+    </div>
+    <script>
+        $(".instruction_img").click(function () {
+            var src = $(this).attr("src");
+            $(".image-view").show();
+            $("#big-image").attr("src", src);
+        });
+        $(".image-view").click(function () {
+            $(".image-view").hide();
+        });
+    </script>
     <script src="static/js/script.js" type="text/javascript"></script>
 {% endblock content %}
