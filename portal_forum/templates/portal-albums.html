@@ -10,7 +10,7 @@
                 {% for album in albums %}
                     <li class="mb-1">
                         <a href="{{ url_for("main.album", album_id=album.id) }}" class="grey-link title-in-list">
-                        <img class="album_cover" width="100px" src="{{ url_for('static', filename='album_covers/' + album.image_file) }}">
+                        <img class="album_cover" width="150px" src="{{ url_for('static', filename='album_covers/' + album.image_file) }}">
                             {{ album.title }}
 
                             ({{ album.date_release }})

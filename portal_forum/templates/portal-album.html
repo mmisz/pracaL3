@@ -1,7 +1,7 @@
 {% extends "portal-layout.html" %}
 {% block content %}
     <h3 class="mt-2 ml-2">
-        <img class="album_cover responsive-full" width="200px"
+        <img class="album_cover responsive-full instruction_img" width="300px"
              src="{{ url_for('static', filename='album_covers/' + album.image_file) }}">
         {{ album.title }}
 
@@ -31,5 +31,18 @@
            class="btn btn-primary-dark text-white responsive-full responsive-marg-6">Albumy
         </a>
     </div>
+    <div class="image-view">
+        <img id="big-image" src="{{ url_for('static', filename='album_covers/' + album.image_file) }}" alt="image_bigger_view">
+    </div>
+    <script>
+        $(".instruction_img").click(function () {
+            var src = $(this).attr("src");
+            $(".image-view").show();
+            $("#big-image").attr("src", src);
+        });
+        $(".image-view").click(function () {
+            $(".image-view").hide();
+        });
+    </script>
 
 {% endblock content %}
